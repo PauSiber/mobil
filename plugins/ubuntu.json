@@ -1,0 +1,21 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-social-message": {
+            "PACKAGE_NAME": "com.ccali14.giderxyz"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.ccali14.giderxyz"
+        },
+        "phonegap-plugin-barcodescanner": {
+            "PACKAGE_NAME": "com.ccali14.giderxyz"
+        }
+    },
+    "dependent_plugins": {}
+}

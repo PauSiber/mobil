@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+<head>
+    <!--
+    Customize this policy to fit your own app's needs. For more guidance, see:
+        https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+    Some notes:
+        * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+        * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+        * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+            * Enable inline JS: add 'unsafe-inline' to default-src
+    -->
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <script type="text/javascript" src="js/jquery-mobile.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--<link rel="stylesheet" href="css/framework7.ios.min.css">-->
+    <!--<link rel="stylesheet" href="css/framework7.ios.colors.min.css">-->
+    <script type="text/javascript" src="js/index.js"></script>
+    <link rel="stylesheet" href="css/my-app.css">
+
+
+    <link rel="stylesheet" href="css/framework7.upscroller.css">
+    <script src="js/framework7.upscroller.js"></script>
+    <script type="application/javascript" src="js/fastclick.js"></script>
+    <script>
+        $(function() {
+            FastClick.attach(document.body);
+        });
+    </script>
+
+    <link rel="stylesheet" href="css/framework7.ios.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <!-- Path to Framework7 color related styles, Material Theme -->
+    <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
+    <!-- Path to your custom app styles-->
+    <title>Gider.xyz</title>
+</head>
+<body >
+
+
+<div class="notifications list-block media-list">
+    <ul>
+
+        <!-- Single notification item -->
+        <li class="notification-item">
+
+        </li>
+
+    </ul>
+</div>
+
+<!--Login-->
+<div class="login-screen">
+    <div class="view">
+        <div class="page">
+            <div class="page-content login-screen-content">
+
+
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <div class="center">Gider.XYZ</div>
+                                <div class="subnavbar">
+                                    <!-- Buttons row as tabs controller in Subnavbar-->
+                                    <div class="buttons-row">
+                                        <!-- Link to 1st tab, active -->
+                                        <a href="#kayit_ol" class="button active tab-link">Kayıt</a>
+                                        <!-- Link to 2nd tab -->
+                                        <a href="#giris_yap" class="button tab-link">Giriş</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tabs swipeable wrapper, required to switch tabs with swipes -->
+                        <div class="tabs-swipeable-wrap">
+                            <!-- Tabs, tabs wrapper -->
+                            <div class="tabs">
+                                <!-- Tab 1, active by default -->
+                                <div id="kayit_ol" class="page-content tab active">
+                                    <div class="content-block">
+
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <form method="post" id="kayit_formu">
+                                            <div class="list-block">
+                                                <ul>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title label">Kullanıcı Adı</div>
+                                                            <div class="item-input">
+                                                                <input type="text" name="fos_user_registration_form[username]" placeholder="Kullanıcı adınız..">
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title label">E-Posta</div>
+                                                            <div class="item-input">
+                                                                <input type="text" name="fos_user_registration_form[email]" placeholder="bilgi@gider.xyz">
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title label">Şifre</div>
+                                                            <div class="item-input">
+                                                                <input type="password" name="fos_user_registration_form[plainPassword][first]" placeholder="SizinGizliŞifreniz">
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title label">Şifre Tekrar</div>
+                                                            <div class="item-input">
+                                                                <input type="password" name="fos_user_registration_form[plainPassword][second]" placeholder="SizinGizliŞifreniz">
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </form>
+                                        <div class="list-block">
+                                            <ul>
+                                                <li><a href="#" class="item-link list-button kayit_ol ">Kayıt Ol</a></li>
+                                            </ul>
+                                            <div class="list-block-label">
+                                                <p>Kayıt ol butonuna bastığınızda sizin için herşeyi hazırlamış olacağız.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- Tab 2 -->
+                                <div id="giris_yap" class="page-content tab">
+                                    <div class="content-block">
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <form method="post" id="giris_formu">
+                                            <div class="list-block">
+                                                <ul>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title label">Kullanıcı Adı</div>
+                                                            <div class="item-input">
+                                                                <input type="text" name="username" placeholder="Kullanıcı adınız..">
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="item-content">
+                                                        <div class="item-inner">
+                                                            <div class="item-title label">Şifre</div>
+                                                            <div class="item-input">
+                                                                <input type="password" name="password" placeholder="SizinGizliŞifreniz">
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </form>
+                                        <div class="list-block">
+                                            <ul>
+                                                <li><a href="#" class="item-link list-button giris_yap ">Giriş yap</a></li>
+                                            </ul>
+                                            <div class="list-block-label">
+                                                <p>Giriş yap butonuna bastığınızda sizin için herşeyi hazırlamış olacağız.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--Login-->
+
+<!-- Layout start-->
+<!-- Status bar overlay for full screen mode (PhoneGap) -->
+<div class="statusbar-overlay"></div>
+<!-- Views -->
+<div class="views">
+    <!-- Your main view, should have "view-main" class -->
+    <div class="view view-main theme-lightblue ">
+
+
+        <!-- Tabs, now tabs wrapper is "views" -->
+        <div class="views tabs toolbar-fixed">
+            <!-- Tab 1 - View 1, active by default -->
+            <div id="tab1" class="view tab active">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="center">Gider.xyz</div>
+                    </div>
+                </div>
+
+                <div class="pages navbar-fixed">
+                    <div data-page="home-1" class="page">
+                        <div class="page-content pull-to-refresh-content">
+
+
+                            <div class="pull-to-refresh-layer">
+                                <div class="preloader"></div>
+                                <div class="pull-to-refresh-arrow"></div>
+                            </div>
+
+                            <br>
+
+                            <div class="tabs-swipeable-wrap">
+                                <!-- Tabs, tabs wrapper -->
+                                <div class="tabs">
+                                    <!-- Tab 1, active by default -->
+                                    <!--<div id="chart1" class="page-content tab active">-->
+
+
+                                    <!--</div>-->
+                                    <!--&lt;!&ndash; Tab 2 &ndash;&gt;-->
+                                    <!--<div id="chart2" class="page-content tab">-->
+
+                                    <!--</div>-->
+                                    <!-- Tab 3 -->
+                                    <div id="chart3" class="page-content tab  infinite-scroll">
+
+                                        <div class="content-block">
+                                            <!--Alacak verecek bar-->
+                                                <!-- Buttons row as tabs controller -->
+                                                <div class="buttons-row">
+                                                    <!-- Link to 1st tab, active -->
+                                                    <a  class="tab-link active button button-big  color-deeppurple nakitBakiye">
+
+                                                        <span class="fa fa-smile-o"></span>
+                                                    </a>
+                                                    <!-- Link to 2nd tab -->
+                                                    <a  class="tab-link button button-big color-orange kartBakiye">
+
+                                                        <span class="creditCard fa fa-credit-wallet"></span>
+                                                    </a>
+                                                </div>
+                                                <br>
+                                            <div class="list-block media-list inset ">
+
+                                                <ul class="anasayfa">
+                                                    <!--Gelir örnek-->
+                                                </ul>
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    <!-- Preloader -->
+                                    <!--<div class="infinite-scroll-preloader">-->
+                                        <!--<div class="preloader"></div>-->
+                                    <!--</div>-->
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Tab 2 - View 2 -->
+            <div id="tab2" class="view tab">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="center">Gelir & Gider Ekle</div>
+                    </div>
+                </div>
+                <div class="pages navbar-fixed">
+                    <div data-page="home-2" class="page">
+                        <div class="page-content pull-to-refresh-content">
+
+                            <div class="pull-to-refresh-layer">
+                                <div class="preloader"></div>
+                                <div class="pull-to-refresh-arrow"></div>
+                            </div>
+
+
+                            <div class="content-block">
+
+                                <!--Temp is here-->
+                                <div class="list-block inset">
+                                    <ul>
+                                        <form method="post" id="gelirGiderEkle">
+                                            <input type="hidden" name="access_token" class="access_token">
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <select required class="selectbox">
+                                                                <option value="1" class="option fa fa-frown-o" selected>Gider </option>
+                                                                <option value="2" class="option fa fa-smile-o">Gelir  </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="kategori" >
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <select name="kategori_id" required class="kategoriler_select kategori_selectbox">
+                                                                <option value="1" class="option" selected>Alışveriş </option>
+                                                                <option value="2" class="option" >Eğlence </option>
+                                                                <option value="3" class="option" >Borç </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="oda" >
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <select name="key" required class="odalar_select">
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <input type="number" class="money" name="tutar" placeholder="25 ₺" data-symbol="₺" data-thousands="." data-decimal="," min="0" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <script>
+                                                if (myApp.device.ios)
+                                                {
+                                                    $('.ios').html(' ' +
+                                                            '<div class="item-content"> ' +
+                                                            '<div class="item-inner"> ' +
+                                                            '<div class="item-input"> ' +
+                                                            '<select name="tur" required class="iphone_tur"> ' +
+                                                            '<option value="0" class="option" selected>Nakit </option> ' +
+                                                            '<option value="1" class="option" >Kredi Kartı </option> ' +
+                                                            '</select> ' +
+                                                            '</div> ' +
+                                                            '</div> ' +
+                                                            '</div> ' +
+                                                            '');
+                                                }
+                                                else
+                                                {
+                                                    //todo diğer kısmı yaz.
+                                                }
+                                            </script>
+                                            <li class="ios">
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">
+                                                            <span class="fa fa-turkish-lira"></span>
+                                                        </div>
+
+                                                        <div class="item-input">
+                                                            <label class="label-switch">
+                                                                <input class="tur_checkbox" name="tur" type="checkbox">
+                                                                <div class="checkbox"></div>
+                                                            </label>
+                                                        </div>
+                                                        <div class="item-title label">
+                                                            <span class="fa fa-credit-card"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <input type="text" name="aciklama" class="aciklama" placeholder="Açıklamanız..">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </form>
+                                    </ul>
+                                    <br>
+                                    <a href="#" class="button button-big button-fill color-gray notification-default gelirGiderKaydetButon">
+                                        Kaydet
+                                        <span class="fa fa-angle-double-right"></span>
+                                    </a>
+                                </div>
+                                <!--Temp is here-->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2 - View 3 -->
+            <div id="tab3" class="view tab">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="center">Alacak & Verecek Görüntüle</div>
+                    </div>
+                </div>
+                <div class="pages navbar-fixed">
+                    <div data-page="home-3" class="page">
+                        <div class="page-content pull-to-refresh-content">
+
+                            <div class="pull-to-refresh-layer">
+                                <div class="preloader"></div>
+                                <div class="pull-to-refresh-arrow"></div>
+                            </div>
+                            <div class="content-block">
+
+                                <!--Alacak verecek bar-->
+                                <div class="content-block">
+                                    <!-- Buttons row as tabs controller -->
+                                    <div class="buttons-row">
+                                        <!-- Link to 1st tab, active -->
+                                        <a href="#alacak_tab" id="5" class="tab-link active button button-big  color-deeppurple alacak_tab">
+                                            Alacaklarım
+                                            <span class="fa fa-smile-o"></span>
+                                        </a>
+                                        <!-- Link to 2nd tab -->
+                                        <a href="#verecek_tab" id="6" class="tab-link button button-big color-orange verecek_tab">
+                                            Vereceklerim
+                                            <span class="fa fa-frown-o"></span>
+                                        </a>
+                                    </div>
+                                    <br>
+
+                                   <div class="borc_okut" style="display: none">
+                                       <a class=" button button-big color-red button-fill borcOkut">
+                                           Borç okut
+                                           <span class="fa fa-frown-o"></span>
+                                       </a>
+                                       <br>
+                                       <small>
+                                           <i class="sosyal">Eğer arkadaşınıza borç verdiyseniz yukarıdaki butonu kullanarak ilgili QR kodu okutunuz, eğer arkadaşınız uygulama kullanmıyorsa lütfen
+                                               <a >tıklayarak davet ediniz</a>..
+                                           </i>
+                                       </small>
+                                   </div>
+                                </div>
+                                <!-- Tabs, tabs wrapper -->
+
+                                <!--Alacak verecek bar-->
+
+                                <!--Temp is here-->
+
+
+                                <div class="tabs list-block media-list">
+                                    <!-- Tab 1, active by default -->
+                                    <div id="alacak_tab" class="tab active">
+                                        <div class="content-block">
+                                            <ul class="alacak_listele">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- Tab 2 -->
+                                    <div id="verecek_tab" class="tab">
+                                        <div class="content-block">
+                                            <ul class="verecek_listele">
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!--Temp is here-->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 3 - View 4 -->
+            <div id="tab4" class="view tab">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="center">Oda Ekle & Sil & Görüntüle</div>
+                    </div>
+                </div>
+                <div class="pages navbar-fixed">
+                    <div data-page="home-3" class="page">
+                        <div class="page-content pull-to-refresh-content">
+
+                            <div class="pull-to-refresh-layer">
+                                <div class="preloader"></div>
+                                <div class="pull-to-refresh-arrow"></div>
+                            </div>
+                            <div class="content-block">
+                                <div class="list-block media-list inset">
+
+
+
+                                    <div class="list-block odaKurDiv" style="display: none;">
+                                        <ul>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-input">
+                                                            <input type="text" name="odaBaslik" class="odaBaslik"  placeholder="Başlığı ne olsun?">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-50">
+                                                <a href="#" class="button button-big color-red button-fill vazgec">
+                                                    Vazgeç
+                                                    <span class=""></span>
+                                                </a>
+                                            </div>
+                                            <div class="col-50">
+                                                <a href="#" class="button button-big color-orange button-fill odaKurKaydetButon">
+                                                    Odamı kur
+                                                    <span class=""></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row butonlar">
+
+                                        <div class="col-50">
+                                            <a href="#" class="button button-big color-deeppurple button-fill odaKurButon">
+                                                Oda kur
+                                                <span class="fa fa-registered"></span>
+                                            </a>
+                                        </div>
+                                        <div class="col-50">
+                                            <a href="#" class="button button-big color-orange button-fill odayaKatilButon">
+                                                Odaya katıl
+                                                <span class="fa fa-sign-in"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <br>
+
+                                    <ul class="odalar">
+
+                                    </ul>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="toolbar tabbar">
+                <div class="toolbar-inner">
+                    <a href="#tab1" id="1" class=" tab-link active anasayfaYenile"><i class="icon fa fa-map-signs fa-2x"></i></a>
+                    <a href="#tab2" id="2"  class=" tab-link ekle"><i class="icon fa fa-plus-circle fa-2x"></i></a>
+                    <a href="#tab3" id="3" class=" tab-link alacakVerecek"><i class="icon fa fa-inbox fa-2x"><span class="badge bg-lightblue color-red">5</span></i></a>
+                    <a href="#tab4" id="4" class=" tab-link odaListele"><i class="icon fa fa-cog fa-2x"></i></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Layout end-->
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<script>
+    $(function () {
+        $('#chart1').highcharts({
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 65
+                }
+            },
+            title: {
+                text: 'Contents of Highsoft\'s weekly fruit delivery'
+            },
+            subtitle: {
+                text: '3D donut in Highcharts'
+            },
+            plotOptions: {
+                pie: {
+                    innerSize: 100,
+                    depth: 50
+                }
+            },
+            series: [{
+                name: 'Delivered amount',
+                data: [
+                    ['Bananas', 8],
+                    ['Kiwi', 3],
+                    ['Mixed nuts', 1],
+                    ['Oranges', 6],
+                    ['Apples', 8],
+                    ['Pears', 4],
+                    ['Clementines', 4],
+                    ['Reddish (bag)', 1],
+                    ['Grapes (bunch)', 1]
+                ]
+            }]
+        });
+        $('svg > text').hide();
+        $('svg > .highcharts-button').hide();
+    });
+
+
+</script>
+
+<script>
+    $(function () {
+        $('#chart2').highcharts({
+            title: {
+                text: 'Gelir - Gider Grafiği'
+            },
+            xAxis: {
+                categories: ['Aralık', 'Ocak', 'Şubat', 'Mart', 'Nisan']
+            },
+            labels: {
+                items: [{
+                    html: 'Bakiye',
+                    style: {
+                        left: '50px',
+                        top: '18px',
+                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+                    }
+                }]
+            },
+            series: [{
+                type: 'column',
+                name: 'Eğlence',
+                data: [300, 200, 500, 300, 400]
+            }, {
+                type: 'column',
+                name: 'Fatura',
+                data: [300, 200, 500, 300, 400]
+            }, {
+                type: 'column',
+                name: 'Ev harcaması',
+                data: [300, 200,900, 300, 400]
+            }, {
+                type: 'spline',
+                name: 'Bakiye',
+                data: [400, 200, 600, 400, 400],
+                marker: {
+                    lineWidth: 2,
+                    lineColor: Highcharts.getOptions().colors[3],
+                    fillColor: 'white'
+                }
+            }]
+        });
+        $('svg > text').hide();
+        $('svg > .highcharts-button').hide();
+    });
+</script>
+<script type="text/javascript" src="cordova.js"></script>
+<!-- Path to Framework7 Library JS-->
+<script type="text/javascript" src="js/framework7.min.js"></script>
+<!-- Path to your app js-->
+<script type="text/javascript" src="js/my-app.js"></script>
+
+
+</body>
+</html>
