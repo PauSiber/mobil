@@ -21,16 +21,23 @@ $(document).on('click','.tab-link',function(){
     var id = $(this).attr('id');
 
     if(id === 'soru-detay-page') {
-
       var icerik_id = $(this).attr('data-detay-id');
-      $('.detay-icerik').text(icerik_id);
-
+      $.each(sorular.kayitlar, function(index,val) {
+        if(val.id == icerik_id) {
+          $('.detay-baslik').html(val.baslik);
+          $('.detay-icerik').html(val.icerik);
+        }
+      });
     }
 
     if(id === 'icerik-detay-page') {
       var icerik_id = $(this).attr('data-detay-id');
-      $('.detay-icerik').text(icerik_id);
-
+      $.each(yazilar.kayitlar, function(index,val) {
+        if(val.id == icerik_id) {
+          $('.detay-baslik').html(val.baslik);
+          $('.detay-icerik').html(val.icerik);
+        }
+      });
 
     }
 
@@ -172,10 +179,116 @@ $(document).on('click', '.kayit_ol',function(){
 
 });
 
+// localStorage keywords
+var yazilar;
+var sorular;
+
 $( document ).ready(function() {
-    anasayfaYenile();
+
+
+  yazilar = JSON.parse(localStorage.getItem("yazilar"));
+  sorular = JSON.parse(localStorage.getItem("sorular"));
+
+  $.each(yazilar.kayitlar, function(index,value) {
+
+    $('#blogIcerik').append(''+
+    '<div class="card demo-card-header-pic" id="blog-icerik-"'+value.id+'>'+
+      '<div style="background-image:url(https://pbs.twimg.com/profile_banners/762376797635960833/1471388019/1500x500)" valign="bottom" class="card-header color-white no-border">'+value.baslik+'</div>'+
+          '<div class="card-content">'+
+              '<div class="card-content-inner">'+
+                  '<p class="color-gray">Posted on '+value.tarih+'</p>'+
+                  '<p>'+value.icerik+'</p>'+
+              '</div>'+
+          '</div> '+
+       '<div class="card-footer"> '+
+          '<a href="#" class="link">Like</a>'+
+          '<a href="#icerik-detay" id="icerik-detay-page" data-detay-id="'+value.id+'" class="tab-link active item-link item-content detay-id">Read more</a>'+
+      '</div>'+
+    '</div>');
+  });
+
+  $.each(sorular.kayitlar, function(index, value) {
+    $('#sorular').append(''+
+    '<div class="list-block media-list " style="margin-top:5px;margin-bottom:5px;" id="soru-id"'+value.id+'>'+
+      '<ul>'+
+        '<li>'+
+          '<a href="#soru-detay" id="soru-detay-page" data-detay-id='+value.id+' class="tab-link active item-link item-content detay-id"> '+
+            '<div class="item-media"><img src="https://pbs.twimg.com/profile_images/765679093228695552/4QWEC5lQ_bigger.jpg" width="44"></div>'+
+            '<div class="item-inner">'+
+              '<div class="item-title-row">'+
+                '<div class="item-title">'+value.baslik+'</div>'+
+              '</div>'+
+              '<div class="item-subtitle">Barisesen</div>'+
+            '</div>'+
+          '</a>'+
+        '</li>'+
+      '</ul>'+
+    '</div>');
+
+  })
+
+
+
 });
 
+$(document).on('click', '#logla', function() {
+  var yaziObj =
+  {
+  "kayitlar":[
+      {
+        id: 1,
+        baslik: 'lorem',
+        icerik: 'test icerik Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        tarih: '01.01.2016'
+      },
+      {
+        id: 2,
+        baslik: 'test2',
+        icerik: '2test icerik Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        tarih: '02.01.2016'
+      },
+      {
+        id: 3,
+        baslik: 'test3',
+        icerik: 'test icerik3 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        tarih: '03.01.2016'
+      },
+      {
+        id: 4,
+        baslik: 'Paü Siber Hakkında !',
+        icerik: 'Siber güvenlik farkındalığı oluşturma ve ülkenin ihtiyacı olan nitelikli iş gücünü üretme güdüsüyle birleşmiş insan topluluğuyuz.<b>Barış Esen</b>',
+        tarih: '03.03.2016'
+      }
+    ]
+  };
+
+  var soruObj = {
+    "kayitlar":[
+      {
+        id:1,
+        baslik:"Test soru 1",
+        icerik:"Test soru icerik 1<br> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        tarih :"01.01.1996"
+      },
+      {
+        id:2,
+        baslik:"Test soru 2",
+        icerik:"Test soru icerik 2 <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+        tarih :"01.01.1996"
+      },
+      {
+        id:3,
+        baslik:"Test soru 3",
+        icerik:"Test soru icerik 3 <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem",
+        tarih :"01.01.1996"
+      },
+    ]
+  }
+  window.localStorage.setItem('yazilar', JSON.stringify(yaziObj));
+  window.localStorage.setItem('sorular', JSON.stringify(soruObj));
+
+  alert('ok')
+})
 
 $(document).on('click','.sosyal', function () {
     var message = {
