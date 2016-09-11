@@ -54,7 +54,7 @@ $(document).on('click','.icerik-detay-back',function() {
 })
 
 // Base url.
-var base_url = 'http://gider.xyz/hackingfest/web/app.php/api/';
+var base_url = 'http://178.62.240.171:3000/api/';
 
 var token;
 
@@ -99,7 +99,7 @@ $(document).on('click','.giris_yap',function(){
             }else
             {
                 myApp.addNotification({
-                    title: 'Gider.XYZ',
+                    title: 'Pausiber.XYZ',
                     message: 'Yanlış kullanıcı adı veya şifre girildi !'
                 });
 
@@ -166,7 +166,7 @@ $(document).on('click', '.kayit_ol',function(){
             }else
             {
                 myApp.addNotification({
-                    title: 'Gider.XYZ',
+                    title: 'pausiber.XYZ',
                     message: 'İşler kötü gitti :( Bir daha denemelisiniz .'
                 });
 
@@ -183,10 +183,142 @@ $(document).on('click', '.kayit_ol',function(){
 var yazilar;
 var sorular;
 
+var sorulari_getir = function() {
+
+  $.ajax({
+      url: base_url+ 'soru-listele',
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        console.log('foksiyonum');
+        // console.log(yanit);
+
+        window.localStorage.setItem('sorular', JSON.stringify(yanit));
+        console.log(JSON.parse(localStorage.getItem("sorular")));
+        sorular = JSON.parse(localStorage.getItem("sorular"));
+
+        $.each(sorular.data, function(index, value) {
+
+          $('#sorular').append(''+
+          '<div class="list-block media-list " style="margin-top:5px;margin-bottom:5px;" id="soru-id"'+value.id+'>'+
+            '<ul>'+
+              '<li>'+
+                '<a href="#soru-detay" id="soru-detay-page" data-detay-id='+value.id+' class="tab-link active item-link item-content detay-id"> '+
+                  '<div class="item-media"><img src="https://pbs.twimg.com/profile_images/765679093228695552/4QWEC5lQ_bigger.jpg" width="44"></div>'+
+                  '<div class="item-inner">'+
+                    '<div class="item-title-row">'+
+                      '<div class="item-title">'+value.baslik+'</div>'+
+                    '</div>'+
+                    '<div class="item-subtitle">Barisesen</div>'+
+                  '</div>'+
+                '</a>'+
+              '</li>'+
+            '</ul>'+
+          '</div>');
+
+        })
+
+
+      }
+    });
+
+}
+
+var soru_goster = function(soru_key) {
+  $.ajax({
+      url: base_url+ 'soru-goster',
+      data: 'soru_key='+soru_key,
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        console.log('foksiyonum');
+        console.log(yanit);
+      }
+    });
+}
+
+var soru_ekle = function(user_key, soru_baslik, soru_icerik) {
+  $.ajax({
+      url: base_url+ 'soru-ekle',
+      data: {user_key: user_key, baslik: soru_baslik, icerik: soru_icerik},
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        console.log('foksiyonum');
+        console.log(yanit);
+      }
+    });
+}
+
+var kullanici_ekle = function(isim, soyisim, username, password, telefon) {
+  $.ajax({
+      url: base_url+ 'user-ekle',
+      data: {isim: isim, soyisim: soyisim, username: username, password: password, telefon: telefon},
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        console.log('user ekle');
+        alert(yanit);
+        console.log(yanit);
+      }
+    });
+}
+
+var cevap_ekle = function(icerik, soru_key, user_key) {
+  $.ajax({
+      url: base_url+ 'cevap-ekle',
+      data: {icerik: icerik, soru_key: soru_key, user_key: user_key},
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        console.log('cevap ekle');
+        console.log(yanit);
+      }
+  });
+}
+
+var cevap_listele = function(soru_key) {
+  $.ajax({
+      url: base_url+ 'cevap-listele',
+      data: {soru_key: soru_key},
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        console.log('cevap listele');
+        console.log(yanit);
+      }
+  });
+}
+
+var etkinlik_listele = function() {
+  $.ajax({
+      url: base_url+ 'etkinlik-listele',
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        console.log('etkinlik listele');
+        console.log(yanit);
+      }
+  });
+}
+
 $( document ).ready(function() {
+  //
+  sorulari_getir();
+  //
+  // soru_goster('J3OtVPgsvvNeuBHe1Feq');
+
+  // soru_ekle('fLNn8Sod', 'Merhaba cordova', 'icerik test cordova app');
+
+  // kullanici_ekle('cordova', 'app', 'crdvpp12', 'pass', '05314265487');
+  // cevap_ekle('merhaba soru ben cevap', 'J3OtVPgsvvNeuBHe1Feq', 'fLNn8Sod');
+
+  // cevap_listele('J3OtVPgsvvNeuBHe1Feq');
+
+  // etkinlik_listele();
 
 
-  yazilar = JSON.parse(localStorage.getItem("yazilar"));
+  // yazilar = JSON.parse(localStorage.getItem("yazilar"));
   sorular = JSON.parse(localStorage.getItem("sorular"));
 
   $.each(yazilar.kayitlar, function(index,value) {
@@ -205,9 +337,11 @@ $( document ).ready(function() {
           '<a href="#icerik-detay" id="icerik-detay-page" data-detay-id="'+value.id+'" class="tab-link active item-link item-content detay-id">Read more</a>'+
       '</div>'+
     '</div>');
+
   });
 
-  $.each(sorular.kayitlar, function(index, value) {
+  $.each(sorular.data, function(index, value) {
+
     $('#sorular').append(''+
     '<div class="list-block media-list " style="margin-top:5px;margin-bottom:5px;" id="soru-id"'+value.id+'>'+
       '<ul>'+
@@ -232,8 +366,7 @@ $( document ).ready(function() {
 });
 
 $(document).on('click', '#logla', function() {
-  var yaziObj =
-  {
+  var yaziObj = {
   "kayitlar":[
       {
         id: 1,
@@ -292,8 +425,8 @@ $(document).on('click', '#logla', function() {
 
 $(document).on('click','.sosyal', function () {
     var message = {
-        text: "Sende bütçeni tüm platformlardan takip etmek ister misin ? ",
-        url: "http://gider.xyz"
+        text: "Paüsiber mobil app ",
+        url: "http://pausiber.xyz"
     };
     window.socialmessage.send(message);
 });
@@ -412,7 +545,7 @@ ptrContent.on('refresh', function (e) {
         }
 
         myApp.addNotification({
-            title: 'Gider.XYZ',
+            title: 'Pausiber.XYZ',
             message: yazi,
             onClose: function () {
                 console.log('Notification closed');
