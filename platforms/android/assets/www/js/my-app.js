@@ -22,10 +22,10 @@ $(document).on('click','.tab-link',function(){
 
     if(id === 'soru-detay-page') {
       var icerik_id = $(this).attr('data-detay-id');
-      $.each(sorular.kayitlar, function(index,val) {
-        if(val.id == icerik_id) {
+      $.each(sorular.data, function(index,val) {
+        if(val.key == icerik_id) {
           $('.detay-baslik').html(val.baslik);
-          $('.detay-icerik').html(val.icerik);
+          // $('.detay-icerik').html(val.icerik);
         }
       });
     }
@@ -54,7 +54,7 @@ $(document).on('click','.icerik-detay-back',function() {
 })
 
 // Base url.
-var base_url = 'http://gider.xyz/hackingfest/web/app.php/api/';
+var base_url = 'http://178.62.240.171:3000/api/';
 
 var token;
 
@@ -99,7 +99,7 @@ $(document).on('click','.giris_yap',function(){
             }else
             {
                 myApp.addNotification({
-                    title: 'Gider.XYZ',
+                    title: 'Pausiber.XYZ',
                     message: 'Yanlış kullanıcı adı veya şifre girildi !'
                 });
 
@@ -166,7 +166,7 @@ $(document).on('click', '.kayit_ol',function(){
             }else
             {
                 myApp.addNotification({
-                    title: 'Gider.XYZ',
+                    title: 'pausiber.XYZ',
                     message: 'İşler kötü gitti :( Bir daha denemelisiniz .'
                 });
 
@@ -182,32 +182,260 @@ $(document).on('click', '.kayit_ol',function(){
 // localStorage keywords
 var yazilar;
 var sorular;
+var etkinlikler;
+
+var sorulari_getir = function() {
+
+  $.ajax({
+      url: base_url+ 'soru-listele',
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        console.log('foksiyonum');
+        // console.log(yanit);
+        if(yanit.data) {
+          window.localStorage.setItem('sorular', JSON.stringify(yanit));
+
+        }
+        console.log(JSON.parse(localStorage.getItem("sorular")));
+        sorular = JSON.parse(localStorage.getItem("sorular"));
+
+        $('#sorular').html('');
+        $.each(sorular.data, function(index, value) {
+
+          $('#sorular').append(''+
+          '<div class="list-block media-list " style="margin-top:5px;margin-bottom:5px;" id="soru-key"'+value.key+'>'+
+            '<ul>'+
+              '<li>'+
+                '<a href="#soru-detay" id="soru-detay-page" data-detay-id='+value.key+' class="tab-link active item-link item-content detay-id"> '+
+                  '<div class="item-media"><img src="https://pbs.twimg.com/profile_images/765679093228695552/4QWEC5lQ_bigger.jpg" width="44"></div>'+
+                  '<div class="item-inner">'+
+                    '<div class="item-title-row">'+
+                      '<div class="item-title">'+value.baslik+'</div>'+
+                    '</div>'+
+                    '<div class="item-subtitle">Barisesen</div>'+
+                  '</div>'+
+                '</a>'+
+              '</li>'+
+            '</ul>'+
+          '</div>');
+
+        })
+
+
+      }
+    });
+
+}
+
+$(document).on('click', '#soru-detay-page', function() {
+  // alert($(this).attr('data-detay-id'));
+  var soru_key = $(this).attr('data-detay-id');
+  if(soru_key) {
+    // soru göster
+    soru_goster(soru_key);
+    cevap_listele(soru_key);
+  }
+})
+
+var soru_goster = function(soru_key) {
+  $.ajax({
+      url: base_url+ 'soru-goster',
+      data: 'soru_key='+soru_key,
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+
+        // error handling ???
+        if(yanit.icerik) {
+          $('.detay-icerik').html(yanit.icerik);
+
+        }else {
+          // error
+        }
+
+      }
+    });
+}
+
+var soru_ekle = function(user_key, soru_baslik, soru_icerik) {
+  $.ajax({
+      url: base_url+ 'soru-ekle',
+      data: {user_key: user_key, baslik: soru_baslik, icerik: soru_icerik},
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        console.log('foksiyonum');
+        console.log(yanit);
+      }
+    });
+}
+
+var kullanici_ekle = function(isim, soyisim, username, password, telefon) {
+  $.ajax({
+      url: base_url+ 'user-ekle',
+      data: {isim: isim, soyisim: soyisim, username: username, password: password, telefon: telefon},
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        console.log('user ekle');
+        alert(yanit);
+        console.log(yanit);
+      }
+    });
+}
+
+var cevap_ekle = function(icerik, soru_key, user_key) {
+  $.ajax({
+      url: base_url+ 'cevap-ekle',
+      data: {icerik: icerik, soru_key: soru_key, user_key: user_key},
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        console.log('cevap ekle');
+        console.log(yanit);
+      }
+  });
+}
+
+var cevap_listele = function(soru_key) {
+  $.ajax({
+      url: base_url+ 'cevap-listele',
+      data: {soru_key: soru_key},
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        if(yanit.data) {
+          console.log('cevap listele');
+          console.log(yanit);
+          $('.cevaplar').html('');
+            $.each(yanit.data, function(index, value) {
+              $('.cevaplar').append('<div class="content-block">'+
+              '<div class="card">'+
+                '<div class="card-content">'+
+                  '<div class="card-content-inner">'+
+                  '<div class="row">'+
+                    '<div class="col-20">'+
+                      '<img src="https://pbs.twimg.com/profile_images/765679093228695552/4QWEC5lQ_bigger.jpg" style="border-radius:100%; margin:auto;width: 50px; margin-top:10%;"  alt="" />'+
+                      '<span><b class="cevap-user">Barış Esen</b></span>'+
+                      '</div>'+
+                      '<div class="col-80 cevap-icerik">'+value.baslik+'</div>'+
+                  '</div>'+
+                  '</div>'+
+                  '</div>'+
+                '</div>'+
+              '</div>');
+          });
+        }
+      }
+  });
+}
+
+var etkinlik_listele = function() {
+  $.ajax({
+      url: base_url+ 'etkinlik-listele',
+      type: 'post',
+      dataType: 'json',
+      success: function (yanit) {
+        console.log('etkinlik listele');
+        console.log(yanit);
+
+        if(yanit.data) {
+
+           window.localStorage.setItem('etkinlikler', JSON.stringify(yanit));
+
+         }
+           etkinlikler = JSON.parse(localStorage.getItem("etkinlikler"));
+
+          $('.etkinlik-liste').html('');
+          $.each(etkinlikler.data, function(index, value) {
+            var date = new Date(value.yapilacak_tarih);
+            date = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
+            $('.etkinlik-liste').append('<li>'+
+            '<a href="#" class="item-link item-content" data-detay-key="'+value.key+'">'+
+            '<div class="item-inner">'+
+            '<div class="item-title-row">'+
+            '<div class="item-title">'+value.baslik+'</div>'+
+            '<div class="item-after">'+date+'</div>'+
+            '</div>'+
+            '<div class="item-subtitle">'+value.yapilacak_yer+'</div>'+
+            '<div class="item-text">Lorem ipsum dolor sit amet...</div>'+
+            '</div>'+
+            '</a>'+
+            '</li>');
+
+          });
+      }
+  });
+}
+
+$(document).on('click', '.soru-ekle', function() {
+  alert("baga basttiinn")
+  $('.soru-ekle-form').show();
+  $('#sorular').hide();
+})
+
+$(document).on('click', '.sor', function() {
+  var soru = $('#soru').val();
+  var soru_baslik = $('#soru-baslik').val();
+
+  soru_ekle('fLNn8Sod', soru_baslik, soru);
+
+  $('.soru-ekle-form').hide();
+  $('#sorular').show();
+
+  // yeni soruyu locale basıp locali güncelle
+
+});
+
+$(document).on('click', '.soru-vazgec', function() {
+  $('.soru-ekle-form').hide();
+  $('#sorular').show();
+})
 
 $( document ).ready(function() {
+  $('.soru-ekle-form').hide();
+
+  //
+  //
+  // soru_goster('J3OtVPgsvvNeuBHe1Feq');
+
+  // soru_ekle('fLNn8Sod', 'Merhaba cordova', 'icerik test cordova app');
+
+  // kullanici_ekle('cordova', 'app', 'crdvpp12', 'pass', '05314265487');
+  // cevap_ekle('merhaba soru ben cevap', 'J3OtVPgsvvNeuBHe1Feq', 'fLNn8Sod');
+
+  // cevap_listele('J3OtVPgsvvNeuBHe1Feq');
+
+  // etkinlik_listele();
 
 
-  yazilar = JSON.parse(localStorage.getItem("yazilar"));
+  // yazilar = JSON.parse(localStorage.getItem("yazilar"));
   sorular = JSON.parse(localStorage.getItem("sorular"));
+  etkinlikler = JSON.parse(localStorage.getItem("etkinlikler"));
 
-  $.each(yazilar.kayitlar, function(index,value) {
 
-    $('#blogIcerik').append(''+
-    '<div class="card demo-card-header-pic" id="blog-icerik-"'+value.id+'>'+
-      '<div style="background-image:url(https://pbs.twimg.com/profile_banners/762376797635960833/1471388019/1500x500)" valign="bottom" class="card-header color-white no-border">'+value.baslik+'</div>'+
-          '<div class="card-content">'+
-              '<div class="card-content-inner">'+
-                  '<p class="color-gray">Posted on '+value.tarih+'</p>'+
-                  '<p>'+value.icerik+'</p>'+
-              '</div>'+
-          '</div> '+
-       '<div class="card-footer"> '+
-          '<a href="#" class="link">Like</a>'+
-          '<a href="#icerik-detay" id="icerik-detay-page" data-detay-id="'+value.id+'" class="tab-link active item-link item-content detay-id">Read more</a>'+
-      '</div>'+
-    '</div>');
-  });
+  // $.each(yazilar.kayitlar, function(index,value) {
+  //
+  //   $('#blogIcerik').append(''+
+  //   '<div class="card demo-card-header-pic" id="blog-icerik-"'+value.id+'>'+
+  //     '<div style="background-image:url(https://pbs.twimg.com/profile_banners/762376797635960833/1471388019/1500x500)" valign="bottom" class="card-header color-white no-border">'+value.baslik+'</div>'+
+  //         '<div class="card-content">'+
+  //             '<div class="card-content-inner">'+
+  //                 '<p class="color-gray">Posted on '+value.tarih+'</p>'+
+  //                 '<p>'+value.icerik+'</p>'+
+  //             '</div>'+
+  //         '</div> '+
+  //      '<div class="card-footer"> '+
+  //         '<a href="#" class="link">Like</a>'+
+  //         '<a href="#icerik-detay" id="icerik-detay-page" data-detay-id="'+value.id+'" class="tab-link active item-link item-content detay-id">Read more</a>'+
+  //     '</div>'+
+  //   '</div>');
+  //
+  // });
+  //
+  $.each(sorular.data, function(index, value) {
 
-  $.each(sorular.kayitlar, function(index, value) {
     $('#sorular').append(''+
     '<div class="list-block media-list " style="margin-top:5px;margin-bottom:5px;" id="soru-id"'+value.id+'>'+
       '<ul>'+
@@ -228,12 +456,32 @@ $( document ).ready(function() {
   })
 
 
+  $.each(etkinlikler.data, function(index, value) {
+    var date = new Date(value.yapilacak_tarih);
+    date = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear();
+    $('.etkinlik-liste').append('<li>'+
+    '<a href="#" class="item-link item-content" data-detay-key="'+value.key+'">'+
+    '<div class="item-inner">'+
+    '<div class="item-title-row">'+
+    '<div class="item-title">'+value.baslik+'</div>'+
+    '<div class="item-after">'+date+'</div>'+
+    '</div>'+
+    '<div class="item-subtitle">'+value.yapilacak_yer+'</div>'+
+    '<div class="item-text">Lorem ipsum dolor sit amet...</div>'+
+    '</div>'+
+    '</a>'+
+    '</li>');
+
+  });
+
+  sorulari_getir();
+  etkinlik_listele();
+
 
 });
 
 $(document).on('click', '#logla', function() {
-  var yaziObj =
-  {
+  var yaziObj = {
   "kayitlar":[
       {
         id: 1,
@@ -292,8 +540,8 @@ $(document).on('click', '#logla', function() {
 
 $(document).on('click','.sosyal', function () {
     var message = {
-        text: "Sende bütçeni tüm platformlardan takip etmek ister misin ? ",
-        url: "http://gider.xyz"
+        text: "Paüsiber mobil app ",
+        url: "http://pausiber.xyz"
     };
     window.socialmessage.send(message);
 });
@@ -358,61 +606,51 @@ ptrContent.on('refresh', function (e) {
         var yazi = '';
         if (window.localStorage.getItem('page') == 1)
         {
-            yazi = "Anasayfa güncellendi";
+            yazi = "Blog yazıları güncellendi";
             anasayfaYenile();
 
         }
         if (window.localStorage.getItem('page') == 2)
         {
-            yazi = "Odalar ve kategoriler güncellendi." ;
-            $.ajax({
-                url: base_url + 'oda/listele-baslik',
-                data: 'access_token=' + token,
-                type: 'post',
-                dataType: 'json',
-                success: function (yanit) {
-
-
-                    if (yanit.status_code == 200) {
-                        $.each(yanit.odalar, function (index, value) {
-
-                            $('.odalar_select').append('<option value="' + value.key + '">' + value.baslik + '</option>');
-                            //alert(value.key);
-
-                        });
-
-
-                    }
-                    else {
-
-                    }
-                }
-            });
+            yazi = "Sorular güncellendi." ;
+            // $.ajax({
+            //     url: base_url + 'oda/listele-baslik',
+            //     data: 'access_token=' + token,
+            //     type: 'post',
+            //     dataType: 'json',
+            //     success: function (yanit) {
+            //
+            //
+            //         if (yanit.status_code == 200) {
+            //             $.each(yanit.odalar, function (index, value) {
+            //
+            //                 $('.odalar_select').append('<option value="' + value.key + '">' + value.baslik + '</option>');
+            //                 //alert(value.key);
+            //
+            //             });
+            //
+            //
+            //         }
+            //         else {
+            //
+            //         }
+            //     }
+            // });
 
         }
         if (window.localStorage.getItem('page') == 3)
         {
             alacakYenile();
-            yazi =  "Alacak & Verecek güncellendi." ;
+            yazi =  "Etkinlik listesi güncellendi" ;
         }
-        if (window.localStorage.getItem('page') == 4)
-        {
-            odaYenile();
-            yazi =  "Odalar güncellendi." ;
-        }
-        if (window.localStorage.getItem('page') == 5)
-        {
-            alacakYenile();
-            yazi =  "Alacaklar güncellendi" ;
-        }
-        if (window.localStorage.getItem('page') == 6)
-        {
-            verecekYenile();
-            yazi =  "Verecekler güncellendi" ;
-        }
+        // if (window.localStorage.getItem('page') == 4)
+        // {
+        //     odaYenile();
+        //     yazi =  "Odalar güncellendi." ;
+        // }
 
         myApp.addNotification({
-            title: 'Gider.XYZ',
+            title: 'Pausiber.xyz',
             message: yazi,
             onClose: function () {
                 console.log('Notification closed');

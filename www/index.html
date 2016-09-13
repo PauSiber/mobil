@@ -297,7 +297,7 @@
                       </div>
                         <!-- <a href="#" class="open-panel">Open Left Panel</a> -->
                       <div class="center">Paü Siber & Soru - Cevap</div>
-                      <div class="right"><span class="fa fa-sign-out cikis_yap"></span></div>
+                      <div class="right" ><span class="icon fa fa-plus soru-ekle" style="color: #fc0; width: 25px;"></span></div>
                   </div>
               </div>
 
@@ -310,6 +310,24 @@
                                 <div class="pull-to-refresh-arrow"></div>
                             </div>
 
+                            <div class="content-block soru-ekle-form" style="display:none;">
+                              <form class="" action="index.html" method="post">
+
+                                <div class="item-content">
+                                  <div class="item-inner">
+                                    <div class="item-input" style="margin-top:20px;">
+                                        <input type="text" style=" width:100%; border:#fc0 solid 1px;" id="soru-baslik" placeholder="Soru başlığını buraya yazabilirsin." name="name" value="">
+                                        <textarea style="resize:none; width:100%; border:#fc0 solid 1px;" id="soru" rows="5" placeholder="Sorunu buraya yazabilirsin."></textarea>
+                                    </div>
+                                  </div>
+                                </div>
+                                <p style="width:100%" class="row">
+                                  <a href="#" class="button button-fill color-gray button-round col-50 soru-vazgec" style="background-color:#8e8e93;">Vazgec</a>
+                                  <a href="#" class="button button-fill color-yellow button-round col-50 sor">Sor</a>
+                                </p>
+
+                              </form>
+                            </div>
                             <div class="content-block" id="sorular">
 
                               <!-- <div class="list-block media-list " style="margin-top:5px;margin-bottom:5px;">
@@ -364,8 +382,8 @@
                             <div class="content-block">
 
                               <div class="list-block media-list">
-                                <ul>
-                                  <li>
+                                <ul class="etkinlik-liste">
+                                  <!-- <li>
                                     <a href="#" class="item-link item-content">
                                       <div class="item-inner">
                                         <div class="item-title-row">
@@ -376,56 +394,7 @@
                                         <div class="item-text">Lorem ipsum dolor sit amet...</div>
                                       </div>
                                     </a>
-                                  </li>
-                                  <li>
-                                    <a href="#" class="item-link item-content">
-                                      <div class="item-inner">
-                                        <div class="item-title-row">
-                                          <div class="item-title">Akademik Bilişim</div>
-                                          <div class="item-after">15.02.2017</div>
-                                        </div>
-                                        <div class="item-subtitle">AfyonKarahisar</div>
-                                        <div class="item-text">Lorem ipsum dolor sit amet...</div>
-                                      </div>
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#" class="item-link item-content">
-                                      <div class="item-inner">
-                                        <div class="item-title-row">
-                                          <div class="item-title">PaüSiber Sosyal Meyda Güvenliği</div>
-                                          <div class="item-after">30.03.2017</div>
-                                        </div>
-                                        <div class="item-subtitle">Paü Teknokent Konferans</div>
-                                        <div class="item-text">Lorem ipsum dolor sit amet...</div>
-                                      </div>
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#" class="item-link item-content">
-                                      <div class="item-inner">
-                                        <div class="item-title-row">
-                                          <div class="item-title">Metasploit Kullanımı</div>
-                                          <div class="item-after">20.03.2017</div>
-                                        </div>
-                                        <div class="item-subtitle">PaüSiber Laboratuvarı</div>
-                                        <div class="item-text">Lorem ipsum dolor sit amet...</div>
-                                      </div>
-                                    </a>
-                                  </li>
-                                  <li>
-                                    <a href="#" class="item-link item-content">
-                                      <div class="item-inner">
-                                        <div class="item-title-row">
-                                          <div class="item-title">Bga Kış Kampı</div>
-                                          <div class="item-after">10.02.2017</div>
-                                        </div>
-                                        <div class="item-subtitle">Harran üni</div>
-                                        <div class="item-text">Lorem ipsum dolor sit amet...</div>
-                                      </div>
-                                    </a>
-                                  </li>
-
+                                  </li> -->
 
                                 </ul>
                               </div>
@@ -515,7 +484,7 @@
             <div id="soru-detay" class="view tab">
               <div class="navbar">
                   <div class="navbar-inner">
-                    <div class="left sliding"><a href="#tab2" id="2" class="tab-link soru-detay-back"><i class="icon icon-back"></i></a></div>
+                    <div class="left sliding"><a href="#tab2" id="2" class="tab-link soru-detay-back"  style="width:50px;"><i class="icon icon-back"></i></a></div>
                       <div class="center">Paü Siber</div>
                       <div class="right">
                         <a href="#" class="open-panel link icon-only">
@@ -552,8 +521,8 @@
                       <!-- /Cevapla -->
 
                       <!-- Yorum -->
-                      <div class="content-block">
-                        <div class="card">
+                      <div class="content-block cevaplar">
+                        <!-- <div class="card">
                           <div class="card-content">
                             <div class="card-content-inner">
                               <div class="row">
@@ -567,93 +536,9 @@
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                       </div>
-                      <div class="content-block">
-                        <div class="card">
-                          <div class="card-content">
-                            <div class="card-content-inner">
-                              <div class="row">
-                                <div class="col-20">
-                                  <img src="/home/baris/Desktop/1/Untitled Folder/1.jpg" style="border-radius:100%; margin:auto;width: 50px; margin-top:10%;"  alt="" />
-                                  <span><b>Barış Esen</b></span>
-                                </div>
-                                <div class="col-80">
-                                  Burası yorum içerik Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="content-block">
-                        <div class="card">
-                          <div class="card-content">
-                            <div class="card-content-inner">
-                              <div class="row">
-                                <div class="col-20">
-                                  <img src="/home/baris/Desktop/1/Untitled Folder/1.jpg" style="border-radius:100%; margin:auto;width: 50px; margin-top:10%;"  alt="" />
-                                  <span><b>Barış Esen</b></span>
-                                </div>
-                                <div class="col-80">
-                                  Burası yorum içerik Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="content-block">
-                        <div class="card">
-                          <div class="card-content">
-                            <div class="card-content-inner">
-                              <div class="row">
-                                <div class="col-20">
-                                  <img src="/home/baris/Desktop/1/Untitled Folder/1.jpg" style="border-radius:100%; margin:auto;width: 50px; margin-top:10%;"  alt="" />
-                                  <span><b>Barış Esen</b></span>
-                                </div>
-                                <div class="col-80">
-                                  Burası yorum içerik Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="content-block">
-                        <div class="card">
-                          <div class="card-content">
-                            <div class="card-content-inner">
-                              <div class="row">
-                                <div class="col-20">
-                                  <img src="/home/baris/Desktop/1/Untitled Folder/1.jpg" style="border-radius:100%; margin:auto;width: 50px; margin-top:10%;"  alt="" />
-                                  <span><b>Barış Esen</b></span>
-                                </div>
-                                <div class="col-80">
-                                  Burası yorum içerik Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="content-block">
-                        <div class="card">
-                          <div class="card-content">
-                            <div class="card-content-inner">
-                              <div class="row">
-                                <div class="col-20">
-                                  <img src="/home/baris/Desktop/1/Untitled Folder/1.jpg" style="border-radius:100%; margin:auto;width: 50px; margin-top:10%;"  alt="" />
-                                  <span><b>Barış Esen</b></span>
-                                </div>
-                                <div class="col-80">
-                                  Burası yorum içerik Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+
                       <!-- / Yorum -->
                     </div>
                   </div>
@@ -664,7 +549,7 @@
             <div id="icerik-detay" class="view tab">
               <div class="navbar">
                   <div class="navbar-inner">
-                    <div class="left sliding"><a href="#tab1" id="1" class="tab-link icerik-detay-back"><i class="icon icon-back"></i></a></div>
+                    <div class="left sliding"><a href="#tab1" id="1" class="tab-link icerik-detay-back" style="width:50px;"><i class="icon icon-back"></i></a></div>
                       <div class="center">Paü Siber</div>
                       <div class="right">
                         <a href="#" class="open-panel link icon-only">
