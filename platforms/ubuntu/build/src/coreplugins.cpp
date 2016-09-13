@@ -19,6 +19,7 @@
 #include <QtCore>
 #include "cplugin.h"
 #include "coreplugins.h"
+#include "plugins/cordova-plugin-inappbrowser/inappbrowser.h"
 INSERT_HEADER_HERE
 
 #define INIT_PLUGIN(class) \
@@ -29,7 +30,7 @@ extern "C" {
 Q_DECL_EXPORT QList<QSharedPointer<CPlugin>> cordovaGetPluginInstances(Cordova *cordova) {
     QList<QSharedPointer<CPlugin>> res;
 
-    INSERT_PLUGIN_HERE
+    INIT_PLUGIN(Inappbrowser);INSERT_PLUGIN_HERE
 
     return res;
 }

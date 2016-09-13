@@ -56,7 +56,7 @@
     <!-- Path to Framework7 color related styles, Material Theme -->
     <link rel="stylesheet" href="css/framework7.ios.colors.min.css">
     <!-- Path to your custom app styles-->
-    <title>Gider.xyz</title>
+    <title>Pausiber.xyz</title>
 </head>
 <body >
 
@@ -81,7 +81,7 @@
 
                         <div class="navbar">
                             <div class="navbar-inner">
-                                <div class="center">Gider.XYZ</div>
+                                <div class="center">Paü Siber</div>
                                 <div class="subnavbar">
                                     <!-- Buttons row as tabs controller in Subnavbar-->
                                     <div class="buttons-row">
@@ -209,19 +209,38 @@
 <!-- Layout start-->
 <!-- Status bar overlay for full screen mode (PhoneGap) -->
 <div class="statusbar-overlay"></div>
+<!-- First, we need to add Panel's overlay that will overlays app while panel is opened -->
+<div class="panel-overlay"></div>
+
+<!-- Left Panel with Reveal effect -->
+ <div class="panel panel-left panel-cover">
+   <div class="content-block">
+     <p>Left Panel content here</p>
+     <!-- Click on link with "close-panel" class will close panel -->
+     <p><a href="#" class="close-panel">Close me</a></p>
+     <!-- Click on link with "open-panel" and data-panel="right" attribute will open Right panel -->
+     <p><a href="#" data-panel="right" class="open-panel">Open Right Panel</a></p>
+   </div>
+ </div>
 <!-- Views -->
-<div class="views">
+<div class="views layout-dark">
     <!-- Your main view, should have "view-main" class -->
-    <div class="view view-main theme-lightblue ">
-
-
+    <div class="view view-main theme-yellow">
         <!-- Tabs, now tabs wrapper is "views" -->
         <div class="views tabs toolbar-fixed">
             <!-- Tab 1 - View 1, active by default -->
             <div id="tab1" class="view tab active">
+
                 <div class="navbar">
                     <div class="navbar-inner">
-                        <div class="center">Gider.xyz</div>
+                        <div class="left">
+                          <a href="#" class="open-panel link icon-only">
+                              <i class="icon icon-bars"></i>
+                          </a>
+                        </div>
+                          <!-- <a href="#" class="open-panel">Open Left Panel</a> -->
+                        <div class="center">Paü Siber</div>
+                        <div class="right"><span class="fa fa-sign-out cikis_yap"></span></div>
                     </div>
                 </div>
 
@@ -229,63 +248,38 @@
                     <div data-page="home-1" class="page">
                         <div class="page-content pull-to-refresh-content">
 
+                          <div class="pull-to-refresh-layer">
+                              <div class="preloader"></div>
+                              <div class="pull-to-refresh-arrow"></div>
+                          </div>
 
-                            <div class="pull-to-refresh-layer">
-                                <div class="preloader"></div>
-                                <div class="pull-to-refresh-arrow"></div>
-                            </div>
+                          <div class="content-block" id="blogIcerik">
+                            <style>
+                              .demo-card-header-pic .card-header {
+                              height: 40vw;
+                              background-size: cover;
+                              background-position: center;
+                              }
+                            </style>
+
+                            <!-- ## my app js içerisinde document on ready de local stroga den oluşturuluyor -->
+                            <!-- <div class="card demo-card-header-pic" id="blog-icerik-">
+                              <div style="background-image:url(https://pbs.twimg.com/profile_banners/762376797635960833/1471388019/1500x500)" valign="bottom" class="card-header color-white no-border">Paü Siber geliyor</div>
+                                <div class="card-content">
+                                  <div class="card-content-inner">
+                                    <p class="color-gray">Posted on January 21, 2015</p>
+                                    <p>Quisque eget vestibulum nulla...</p>
+                                  </div>
+                                </div>
+                                <div class="card-footer">
+                                <a href="#" class="link">Like</a>
+
+                                <a href="#icerik-detay" id="icerik-detay-page" data-detay-id='icerik test icerik 1' class="tab-link active item-link item-content detay-id">Read more</a>
+                                </div>
+                            </div> -->
 
                             <br>
-
-                            <div class="tabs-swipeable-wrap">
-                                <!-- Tabs, tabs wrapper -->
-                                <div class="tabs">
-                                    <!-- Tab 1, active by default -->
-                                    <!--<div id="chart1" class="page-content tab active">-->
-
-
-                                    <!--</div>-->
-                                    <!--&lt;!&ndash; Tab 2 &ndash;&gt;-->
-                                    <!--<div id="chart2" class="page-content tab">-->
-
-                                    <!--</div>-->
-                                    <!-- Tab 3 -->
-                                    <div id="chart3" class="page-content tab  infinite-scroll">
-
-                                        <div class="content-block">
-                                            <!--Alacak verecek bar-->
-                                                <!-- Buttons row as tabs controller -->
-                                                <div class="buttons-row">
-                                                    <!-- Link to 1st tab, active -->
-                                                    <a  class="tab-link active button button-big  color-deeppurple nakitBakiye">
-
-                                                        <span class="fa fa-smile-o"></span>
-                                                    </a>
-                                                    <!-- Link to 2nd tab -->
-                                                    <a  class="tab-link button button-big color-orange kartBakiye">
-
-                                                        <span class="creditCard fa fa-credit-wallet"></span>
-                                                    </a>
-                                                </div>
-                                                <br>
-                                            <div class="list-block media-list inset ">
-
-                                                <ul class="anasayfa">
-                                                    <!--Gelir örnek-->
-                                                </ul>
-
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                    <!-- Preloader -->
-                                    <!--<div class="infinite-scroll-preloader">-->
-                                        <!--<div class="preloader"></div>-->
-                                    <!--</div>-->
-                                </div>
-                            </div>
-
+                          </div>
                         </div>
 
                     </div>
@@ -293,11 +287,19 @@
             </div>
             <!-- Tab 2 - View 2 -->
             <div id="tab2" class="view tab">
-                <div class="navbar">
-                    <div class="navbar-inner">
-                        <div class="center">Gelir & Gider Ekle</div>
-                    </div>
-                </div>
+              <div class="navbar">
+                  <div class="navbar-inner">
+                      <div class="left">
+                        <a href="#" class="open-panel link icon-only">
+                            <i class="icon icon-bars"></i>
+                        </a>
+                      </div>
+                        <!-- <a href="#" class="open-panel">Open Left Panel</a> -->
+                      <div class="center">Paü Siber & Soru - Cevap</div>
+                      <div class="right" ><span class="icon fa fa-plus soru-ekle" style="color: #fc0; width: 25px;"></span></div>
+                  </div>
+              </div>
+
                 <div class="pages navbar-fixed">
                     <div data-page="home-2" class="page">
                         <div class="page-content pull-to-refresh-content">
@@ -307,117 +309,44 @@
                                 <div class="pull-to-refresh-arrow"></div>
                             </div>
 
+                            <div class="content-block soru-ekle-form" style="display:none;">
+                              <form class="" action="index.html" method="post">
 
-                            <div class="content-block">
-
-                                <!--Temp is here-->
-                                <div class="list-block inset">
-                                    <ul>
-                                        <form method="post" id="gelirGiderEkle">
-                                            <input type="hidden" name="access_token" class="access_token">
-                                            <li>
-                                                <div class="item-content">
-                                                    <div class="item-inner">
-                                                        <div class="item-input">
-                                                            <select required class="selectbox">
-                                                                <option value="1" class="option fa fa-frown-o" selected>Gider </option>
-                                                                <option value="2" class="option fa fa-smile-o">Gelir  </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="kategori" >
-                                                <div class="item-content">
-                                                    <div class="item-inner">
-                                                        <div class="item-input">
-                                                            <select name="kategori_id" required class="kategoriler_select kategori_selectbox">
-                                                                <option value="1" class="option" selected>Alışveriş </option>
-                                                                <option value="2" class="option" >Eğlence </option>
-                                                                <option value="3" class="option" >Borç </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="oda" >
-                                                <div class="item-content">
-                                                    <div class="item-inner">
-                                                        <div class="item-input">
-                                                            <select name="key" required class="odalar_select">
-
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="item-content">
-                                                    <div class="item-inner">
-                                                        <div class="item-input">
-                                                            <input type="number" class="money" name="tutar" placeholder="25 ₺" data-symbol="₺" data-thousands="." data-decimal="," min="0" required>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <script>
-                                                if (myApp.device.ios)
-                                                {
-                                                    $('.ios').html(' ' +
-                                                            '<div class="item-content"> ' +
-                                                            '<div class="item-inner"> ' +
-                                                            '<div class="item-input"> ' +
-                                                            '<select name="tur" required class="iphone_tur"> ' +
-                                                            '<option value="0" class="option" selected>Nakit </option> ' +
-                                                            '<option value="1" class="option" >Kredi Kartı </option> ' +
-                                                            '</select> ' +
-                                                            '</div> ' +
-                                                            '</div> ' +
-                                                            '</div> ' +
-                                                            '');
-                                                }
-                                                else
-                                                {
-                                                    //todo diğer kısmı yaz.
-                                                }
-                                            </script>
-                                            <li class="ios">
-                                                <div class="item-content">
-                                                    <div class="item-inner">
-                                                        <div class="item-title label">
-                                                            <span class="fa fa-turkish-lira"></span>
-                                                        </div>
-
-                                                        <div class="item-input">
-                                                            <label class="label-switch">
-                                                                <input class="tur_checkbox" name="tur" type="checkbox">
-                                                                <div class="checkbox"></div>
-                                                            </label>
-                                                        </div>
-                                                        <div class="item-title label">
-                                                            <span class="fa fa-credit-card"></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="item-content">
-                                                    <div class="item-inner">
-                                                        <div class="item-input">
-                                                            <input type="text" name="aciklama" class="aciklama" placeholder="Açıklamanız..">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </form>
-                                    </ul>
-                                    <br>
-                                    <a href="#" class="button button-big button-fill color-gray notification-default gelirGiderKaydetButon">
-                                        Kaydet
-                                        <span class="fa fa-angle-double-right"></span>
-                                    </a>
+                                <div class="item-content">
+                                  <div class="item-inner">
+                                    <div class="item-input" style="margin-top:20px;">
+                                        <input type="text" style=" width:100%; border:#fc0 solid 1px;" id="soru-baslik" placeholder="Soru başlığını buraya yazabilirsin." name="name" value="">
+                                        <textarea style="resize:none; width:100%; border:#fc0 solid 1px;" id="soru" rows="5" placeholder="Sorunu buraya yazabilirsin."></textarea>
+                                    </div>
+                                  </div>
                                 </div>
-                                <!--Temp is here-->
+                                <p style="width:100%" class="row">
+                                  <a href="#" class="button button-fill color-gray button-round col-50 soru-vazgec" style="background-color:#8e8e93;">Vazgec</a>
+                                  <a href="#" class="button button-fill color-yellow button-round col-50 sor">Sor</a>
+                                </p>
+
+                              </form>
+                            </div>
+                            <div class="content-block" id="sorular">
+
+                              <!-- <div class="list-block media-list " style="margin-top:5px;margin-bottom:5px;">
+                                <ul>
+                                  <li>
+                                    <a href="#soru-detay" id="soru-detay-page" data-detay-id='15' class="tab-link active item-link item-content detay-id">
+                                      <div class="item-media"><img src="https://pbs.twimg.com/profile_images/765679093228695552/4QWEC5lQ_bigger.jpg" width="44"></div>
+                                      <div class="item-inner">
+                                        <div class="item-title-row">
+                                          <div class="item-title">Meterpreter nedir ? Nasıl root olunur ?</div>
+                                        </div>
+                                        <div class="item-subtitle">Brssn</div>
+                                      </div>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div> -->
+
+                              <!-- Buraya gelecek -->
+
 
                             </div>
                         </div>
@@ -427,11 +356,20 @@
 
             <!-- Tab 2 - View 3 -->
             <div id="tab3" class="view tab">
-                <div class="navbar">
-                    <div class="navbar-inner">
-                        <div class="center">Alacak & Verecek Görüntüle</div>
-                    </div>
-                </div>
+              <div class="navbar">
+                  <div class="navbar-inner">
+                      <div class="left">
+                        <a href="#" class="open-panel link icon-only">
+                            <i class="icon icon-bars"></i>
+                        </a>
+                      </div>
+
+                        <!-- <a href="#" class="open-panel">Open Left Panel</a> -->
+                      <div class="center">Paü Siber & Etkinlik Habercisi</div>
+                      <div class="right"><span class="fa fa-sign-out cikis_yap"></span></div>
+                  </div>
+              </div>
+
                 <div class="pages navbar-fixed">
                     <div data-page="home-3" class="page">
                         <div class="page-content pull-to-refresh-content">
@@ -442,64 +380,23 @@
                             </div>
                             <div class="content-block">
 
-                                <!--Alacak verecek bar-->
-                                <div class="content-block">
-                                    <!-- Buttons row as tabs controller -->
-                                    <div class="buttons-row">
-                                        <!-- Link to 1st tab, active -->
-                                        <a href="#alacak_tab" id="5" class="tab-link active button button-big  color-deeppurple alacak_tab">
-                                            Alacaklarım
-                                            <span class="fa fa-smile-o"></span>
-                                        </a>
-                                        <!-- Link to 2nd tab -->
-                                        <a href="#verecek_tab" id="6" class="tab-link button button-big color-orange verecek_tab">
-                                            Vereceklerim
-                                            <span class="fa fa-frown-o"></span>
-                                        </a>
-                                    </div>
-                                    <br>
-
-                                   <div class="borc_okut" style="display: none">
-                                       <a class=" button button-big color-red button-fill borcOkut">
-                                           Borç okut
-                                           <span class="fa fa-frown-o"></span>
-                                       </a>
-                                       <br>
-                                       <small>
-                                           <i class="sosyal">Eğer arkadaşınıza borç verdiyseniz yukarıdaki butonu kullanarak ilgili QR kodu okutunuz, eğer arkadaşınız uygulama kullanmıyorsa lütfen
-                                               <a >tıklayarak davet ediniz</a>..
-                                           </i>
-                                       </small>
-                                   </div>
-                                </div>
-                                <!-- Tabs, tabs wrapper -->
-
-                                <!--Alacak verecek bar-->
-
-                                <!--Temp is here-->
-
-
-                                <div class="tabs list-block media-list">
-                                    <!-- Tab 1, active by default -->
-                                    <div id="alacak_tab" class="tab active">
-                                        <div class="content-block">
-                                            <ul class="alacak_listele">
-
-                                            </ul>
+                              <div class="list-block media-list">
+                                <ul class="etkinlik-liste">
+                                  <!-- <li>
+                                    <a href="#" class="item-link item-content">
+                                      <div class="item-inner">
+                                        <div class="item-title-row">
+                                          <div class="item-title">Hacktrick</div>
+                                          <div class="item-after">01.01.2017</div>
                                         </div>
-                                    </div>
-                                    <!-- Tab 2 -->
-                                    <div id="verecek_tab" class="tab">
-                                        <div class="content-block">
-                                            <ul class="verecek_listele">
+                                        <div class="item-subtitle">Eskişehir</div>
+                                        <div class="item-text">Lorem ipsum dolor sit amet...</div>
+                                      </div>
+                                    </a>
+                                  </li> -->
 
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <!--Temp is here-->
+                                </ul>
+                              </div>
 
                             </div>
                         </div>
@@ -507,193 +404,192 @@
                 </div>
             </div>
 
-            <!-- Tab 3 - View 4 -->
+            <!-- Tab 3 - View 4 PROFİL -->
             <div id="tab4" class="view tab">
-                <div class="navbar">
-                    <div class="navbar-inner">
-                        <div class="center">Oda Ekle & Sil & Görüntüle</div>
-                    </div>
-                </div>
+              <div class="navbar">
+                  <div class="navbar-inner">
+                      <div class="left">
+                        <a href="#" class="open-panel link icon-only">
+                            <i class="icon icon-bars"></i>
+                        </a>
+                      </div>
+                        <!-- <a href="#" class="open-panel">Open Left Panel</a> -->
+                      <div class="center">Paü Siber & Profil</div>
+                      <div class="right"><span class="fa fa-sign-out cikis_yap"></span></div>
+                  </div>
+              </div>
+
                 <div class="pages navbar-fixed">
                     <div data-page="home-3" class="page">
-                        <div class="page-content pull-to-refresh-content">
+                        <!-- <div class="page-content pull-to-refresh-content"> -->
+                        <div class="page-content">
 
-                            <div class="pull-to-refresh-layer">
+
+                            <!-- <div class="pull-to-refresh-layer">
                                 <div class="preloader"></div>
                                 <div class="pull-to-refresh-arrow"></div>
-                            </div>
-                            <div class="content-block">
-                                <div class="list-block media-list inset">
+                            </div> -->
+                            <div class="content-block-inner" style="height:98%;padding-right: 0;padding-top: 0;">
 
-
-
-                                    <div class="list-block odaKurDiv" style="display: none;">
-                                        <ul>
-                                            <li>
-                                                <div class="item-content">
-                                                    <div class="item-inner">
-                                                        <div class="item-input">
-                                                            <input type="text" name="odaBaslik" class="odaBaslik"  placeholder="Başlığı ne olsun?">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-50">
-                                                <a href="#" class="button button-big color-red button-fill vazgec">
-                                                    Vazgeç
-                                                    <span class=""></span>
-                                                </a>
-                                            </div>
-                                            <div class="col-50">
-                                                <a href="#" class="button button-big color-orange button-fill odaKurKaydetButon">
-                                                    Odamı kur
-                                                    <span class=""></span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row butonlar">
-
-                                        <div class="col-50">
-                                            <a href="#" class="button button-big color-deeppurple button-fill odaKurButon">
-                                                Oda kur
-                                                <span class="fa fa-registered"></span>
-                                            </a>
-                                        </div>
-                                        <div class="col-50">
-                                            <a href="#" class="button button-big color-orange button-fill odayaKatilButon">
-                                                Odaya katıl
-                                                <span class="fa fa-sign-in"></span>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <br>
-
-                                    <ul class="odalar">
-
-                                    </ul>
-
-
+                              <div class="row" style="height:60%;width:100%;">
+                                <div class="content-block col-30" style="margin-left: 10%;" >
+                                  <img src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAZRAAAAJGNhZTIyYTE1LTdiNmUtNGM3My1iZThhLTAzNzk1Zjc1YWI0NQ.jpg" style="border-radius:100%; margin:auto;width: 150px; margin-top:10%;"  alt="" />
                                 </div>
+                                <div class="content-block col-50">
+                                    <div class="row" style="text-align:center;">
+                                      <b style="margin: auto;margin-top: 10%;">Barış Esen</b>
+                                    </div>
+                                    <div class="row">
+                                      <span>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                      </span>
+                                    </div>
+                                </div>
+                              </div>
+                              <div class="row" style="height:40%;">
+                                <div class="row no-gutter" style="width: 100%; height: 33%;">
+                                  <div class="col-50" style=" height:100%; text-align:center;">
+                                    <i class="fa fa-globe fa-5x" aria-hidden="true" style="color:grey"></i>
+                                  </div>
+                                  <div class="col-50" style=" height:100%; text-align:center; ">
+                                    <i class="fa fa-facebook-square fa-5x" aria-hidden="true" style="color:#222669;"></i>
+                                  </div>
+                                </div>
+                                <div class="row no-gutter"  style=" width: 100%; height: 33%;">
+                                  <div class="col-50" style="height:100%; text-align:center;">
+                                    <i class="fa fa-github-square fa-5x" aria-hidden="true"></i>
+                                  </div>
+                                  <div class="col-50" style="height:100%; text-align:center;">
+                                    <i class="fa fa-twitter-square fa-5x" aria-hidden="true" style="color:#4099FF"></i>
+                                  </div>
+                                </div>
+                                <div class="row no-gutter"  style=" width: 100%; height: 33%;">
+                                  <div class="col-50" style="height:100%; text-align:center;">
+                                    <i class="fa fa-linkedin-square fa-5x" aria-hidden="true" style="color:#0077B5;"></i>
+                                  </div>
+                                  <div class="col-50" style="height:100%; text-align:center;">
+                                    <i class="fa fa-envelope-square fa-5x" aria-hidden="true"></i>
+                                  </div>
+                                </div>
+                              </div>
+
+                                <!-- Buraya gelecek -->
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div id="soru-detay" class="view tab">
+              <div class="navbar">
+                  <div class="navbar-inner">
+                    <div class="left sliding"><a href="#tab2" id="2" class="tab-link soru-detay-back"  style="width:50px;"><i class="icon icon-back"></i></a></div>
+                      <div class="center">Paü Siber</div>
+                      <div class="right">
+                        <a href="#" class="open-panel link icon-only">
+                            <i class="icon icon-bars"></i>
+                        </a>
+                      </div>
+                  </div>
+              </div>
+              <div class="pages">
+                <div data-page="soru detay" class="page">
+                  <div class="page-content">
+
+                    <div class="content-block">
+                      <div class="content-block-inner">
+                        <h1 class="detay-baslik"></h1>
+                        <p class="detay-icerik"></p>
+                      </div>
+
+                      <!--  Cevapla -->
+                        <div class="content-block" style="border:#ccc solid 1px;">
+                          <form class="" action="index.html" method="post">
+
+                            <div class="item-content">
+                              <div class="item-inner">
+                                <div class="item-input" style="margin-top:20px;">
+                                    <textarea style="resize:none; width:100%;" rows="5" placeholder="Cevabını buraya yazabilirsin."></textarea>
+                                </div>
+                              </div>
+                            </div>
+                            <p><a href="#" class="button button-fill color-red button-round">Cevapla</a></p>
+
+                          </form>
+                        </div>
+                      <!-- /Cevapla -->
+
+                      <!-- Yorum -->
+                      <div class="content-block cevaplar">
+                        <!-- <div class="card">
+                          <div class="card-content">
+                            <div class="card-content-inner">
+                              <div class="row">
+                                <div class="col-20">
+                                  <img src="/home/baris/Desktop/1/Untitled Folder/1.jpg" style="border-radius:100%; margin:auto;width: 50px; margin-top:10%;"  alt="" />
+                                  <span><b>Barış Esen</b></span>
+                                </div>
+                                <div class="col-80">
+                                  Burası yorum içerik Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+                      </div>
+
+                      <!-- / Yorum -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="icerik-detay" class="view tab">
+              <div class="navbar">
+                  <div class="navbar-inner">
+                    <div class="left sliding"><a href="#tab1" id="1" class="tab-link icerik-detay-back" style="width:50px;"><i class="icon icon-back"></i></a></div>
+                      <div class="center">Paü Siber</div>
+                      <div class="right">
+                        <a href="#" class="open-panel link icon-only">
+                            <i class="icon icon-bars"></i>
+                        </a>
+                      </div>
+                  </div>
+              </div>
+              <div class="pages">
+                <div data-page="icerik detay" class="page">
+                  <div class="page-content">
+                    <div class="content-block">
+                      <div class="content-block-inner">
+                        <h1 class="detay-baslik"></h1>
+                        <p class="detay-icerik"></p>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div class="toolbar tabbar">
                 <div class="toolbar-inner">
-                    <a href="#tab1" id="1" class=" tab-link active anasayfaYenile"><i class="icon fa fa-map-signs fa-2x"></i></a>
-                    <a href="#tab2" id="2"  class=" tab-link ekle"><i class="icon fa fa-plus-circle fa-2x"></i></a>
-                    <a href="#tab3" id="3" class=" tab-link alacakVerecek"><i class="icon fa fa-inbox fa-2x"><span class="badge bg-lightblue color-red">5</span></i></a>
-                    <a href="#tab4" id="4" class=" tab-link odaListele"><i class="icon fa fa-cog fa-2x"></i></a>
+                    <!-- <a href="#tab1" id="1" class=" tab-link active icerik-back"><i class="icon fa fa-map-signs fa-2x"></i></a>
+                    <a href="#tab2" id="2"  class=" tab-link soru-back"><i class="icon fa fa-plus-circle fa-2x"></i></a>
+                    <a href="#tab3" id="3" class=" tab-link"><i class="icon fa fa-inbox fa-2x"></i></a>
+                    <a href="#tab4" id="4" class=" tab-link"><i class="icon fa fa-cog fa-2x"></i></a> -->
+                    <a href="#tab1" id="1" class=" tab-link active icerik-back"><i class="icon fa fa-map-signs fa-2x"></i></a>
+                    <a href="#tab2" id="2"  class=" tab-link soru-back"><i class="icon fa fa-question fa-2x"></i></a>
+                    <a href="#tab3" id="3" class=" tab-link"><i class="icon fa fa-calendar fa-2x"></i></a>
+                    <a href="#tab4" id="4" class=" tab-link"><i class="icon fa fa-user fa-2x"></i></a>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
+
 <!-- Layout end-->
-
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/highcharts-3d.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-
-<script>
-    $(function () {
-        $('#chart1').highcharts({
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 65
-                }
-            },
-            title: {
-                text: 'Contents of Highsoft\'s weekly fruit delivery'
-            },
-            subtitle: {
-                text: '3D donut in Highcharts'
-            },
-            plotOptions: {
-                pie: {
-                    innerSize: 100,
-                    depth: 50
-                }
-            },
-            series: [{
-                name: 'Delivered amount',
-                data: [
-                    ['Bananas', 8],
-                    ['Kiwi', 3],
-                    ['Mixed nuts', 1],
-                    ['Oranges', 6],
-                    ['Apples', 8],
-                    ['Pears', 4],
-                    ['Clementines', 4],
-                    ['Reddish (bag)', 1],
-                    ['Grapes (bunch)', 1]
-                ]
-            }]
-        });
-        $('svg > text').hide();
-        $('svg > .highcharts-button').hide();
-    });
-
-
-</script>
-
-<script>
-    $(function () {
-        $('#chart2').highcharts({
-            title: {
-                text: 'Gelir - Gider Grafiği'
-            },
-            xAxis: {
-                categories: ['Aralık', 'Ocak', 'Şubat', 'Mart', 'Nisan']
-            },
-            labels: {
-                items: [{
-                    html: 'Bakiye',
-                    style: {
-                        left: '50px',
-                        top: '18px',
-                        color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
-                    }
-                }]
-            },
-            series: [{
-                type: 'column',
-                name: 'Eğlence',
-                data: [300, 200, 500, 300, 400]
-            }, {
-                type: 'column',
-                name: 'Fatura',
-                data: [300, 200, 500, 300, 400]
-            }, {
-                type: 'column',
-                name: 'Ev harcaması',
-                data: [300, 200,900, 300, 400]
-            }, {
-                type: 'spline',
-                name: 'Bakiye',
-                data: [400, 200, 600, 400, 400],
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[3],
-                    fillColor: 'white'
-                }
-            }]
-        });
-        $('svg > text').hide();
-        $('svg > .highcharts-button').hide();
-    });
-</script>
 <script type="text/javascript" src="cordova.js"></script>
 <!-- Path to Framework7 Library JS-->
 <script type="text/javascript" src="js/framework7.min.js"></script>

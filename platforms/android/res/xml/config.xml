@@ -11,6 +11,9 @@
     <feature name="SocialMessage">
         <param name="android-package" value="uk.co.ilee.socialmessage.SocialMessage" />
     </feature>
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
     <allow-intent href="market:*" />
     <name>PaüSiber</name>
     <description>

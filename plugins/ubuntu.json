@@ -15,6 +15,9 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ccali14.giderxyz"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ccali14.giderxyz"
         }
     },
     "dependent_plugins": {}

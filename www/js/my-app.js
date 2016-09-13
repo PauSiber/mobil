@@ -32,10 +32,17 @@ $(document).on('click','.tab-link',function(){
 
     if(id === 'icerik-detay-page') {
       var icerik_id = $(this).attr('data-detay-id');
-      $.each(yazilar.kayitlar, function(index,val) {
-        if(val.id == icerik_id) {
-          $('.detay-baslik').html(val.baslik);
-          $('.detay-icerik').html(val.icerik);
+      alert(icerik_id);
+      $.each(yazilar, function(index,val) {
+        if(val.link == icerik_id) {
+          alert('biz bize benzeriz :)');
+          $('.detay-baslik').html(val.title);
+          $('.detay-icerik').html(val.content);
+          // $('img').data( "foo", $('img').attr('src') );
+          // $('img').attr('src','http://icons.iconarchive.com/icons/icons8/ios7/256/Computer-Hardware-Left-Click-icon.png');
+          $('img').height('128px');
+          $('img').width('128px');
+          // $('img').css("widht","%100");
         }
       });
 
@@ -45,12 +52,18 @@ $(document).on('click','.tab-link',function(){
 
 });
 
+$(document).on('click', 'img', function() {
+  var ref = cordova.InAppBrowser.open($(this).attr('src'), 'InAppBrowser');
+})
+
 $(document).on('click','.soru-detay-back',function() {
   $('.soru-back').addClass('active');
 })
 
 $(document).on('click','.icerik-detay-back',function() {
   $('.icerik-back').addClass('active');
+  $('.detay-baslik').html('');
+  $('.detay-icerik').html('');
 })
 
 // Base url.
@@ -393,7 +406,75 @@ $(document).on('click', '.soru-vazgec', function() {
   $('#sorular').show();
 })
 
+
+// $(document).on('error', 'img', function () {
+//   // $('img').data( "foo", $('img').attr('src') );
+//     $(this).data("foo", $(this).attr('src'));
+//     alert($(this).data("foo"));
+// });
+
 $( document ).ready(function() {
+
+  $.ajax({
+    url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent('https://canyoupwn.me/feed'),
+    dataType : 'json',
+    success  : function (data) {
+      // console.log(data);
+      if (data.responseData.feed && data.responseData.feed.entries) {
+        yazilar = data.responseData.feed.entries;
+        $.each(data.responseData.feed.entries, function (i, e) {
+          // console.log("------------------------");
+          // console.log("title      : " + e.title);
+          // console.log("author     : " + e.author);
+          // console.log("link: " + e.link);
+          // console.log("content: " + e.content);
+
+          $('#blogIcerik').append(''+
+            '<div class="card demo-card-header-pic" id="blog-icerik-"'+e.link+'>'+
+              '<div style="background-image:url(https://pbs.twimg.com/profile_banners/762376797635960833/1471388019/1500x500)" valign="bottom" class="card-header color-white no-border">'+e.title+'</div>'+
+                  '<div class="card-content">'+
+                      '<div class="card-content-inner">'+
+                          '<p class="color-gray">Posted on '+e.publishedDate+'</p>'+
+                          '<p>'+e.contentSnippet+'</p>'+
+                      '</div>'+
+                  '</div> '+
+               '<div class="card-footer"> '+
+                  '<a href="#" class="link">Like</a>'+
+                  '<a href="#icerik-detay" id="icerik-detay-page" data-detay-id="'+e.link+'" class="tab-link active item-link item-content detay-id">Read more</a>'+
+              '</div>'+
+            '</div>');
+
+        });
+      }else {
+        alert('bulamadi');
+      }
+    },
+      error: function (xhr, ajaxOptions, thrownError) {
+        alert(xhr);
+        alert(thrownError);
+      }
+  });
+  // alert('test')
+  // $.each(yazilar.kayitlar, function(index,value) {
+  //
+  //   $('#blogIcerik').append(''+
+  //   '<div class="card demo-card-header-pic" id="blog-icerik-"'+value.id+'>'+
+  //     '<div style="background-image:url(https://pbs.twimg.com/profile_banners/762376797635960833/1471388019/1500x500)" valign="bottom" class="card-header color-white no-border">'+value.baslik+'</div>'+
+  //         '<div class="card-content">'+
+  //             '<div class="card-content-inner">'+
+  //                 '<p class="color-gray">Posted on '+value.tarih+'</p>'+
+  //                 '<p>'+value.icerik+'</p>'+
+  //             '</div>'+
+  //         '</div> '+
+  //      '<div class="card-footer"> '+
+  //         '<a href="#" class="link">Like</a>'+
+  //         '<a href="#icerik-detay" id="icerik-detay-page" data-detay-id="'+value.id+'" class="tab-link active item-link item-content detay-id">Read more</a>'+
+  //     '</div>'+
+  //   '</div>');
+  //
+  // });
+
+
   $('.soru-ekle-form').hide();
 
   //

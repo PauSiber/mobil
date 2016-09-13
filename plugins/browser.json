@@ -15,6 +15,9 @@
         },
         "cordova-plugin-social-message": {
             "PACKAGE_NAME": "com.ccali14.giderxyz"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.thelastcodebenders.pausiber"
         }
     },
     "dependent_plugins": {}

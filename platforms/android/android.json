@@ -19,6 +19,10 @@
                         {
                             "xml": "<feature name=\"SocialMessage\"><param name=\"android-package\" value=\"uk.co.ilee.socialmessage.SocialMessage\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -554,6 +558,9 @@
         },
         "cordova-plugin-social-message": {
             "PACKAGE_NAME": "com.ccali14.giderxyz"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.thelastcodebenders.pausiber"
         }
     },
     "dependent_plugins": {},
@@ -570,6 +577,14 @@
             "id": "cordova-plugin-social-message.SocialMessage",
             "clobbers": [
                 "socialmessage"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+            "id": "cordova-plugin-inappbrowser.inappbrowser",
+            "clobbers": [
+                "cordova.InAppBrowser.open",
+                "window.open"
             ]
         }
     ]

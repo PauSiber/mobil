@@ -15,6 +15,9 @@
         },
         "phonegap-plugin-barcodescanner": {
             "PACKAGE_NAME": "com.ccali14.giderxyz"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.ccali14.giderxyz"
         }
     },
     "dependent_plugins": {},
@@ -34,11 +37,21 @@
             "clobbers": [
                 "cordova.plugins.barcodeScanner"
             ]
+        },
+        {
+            "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+            "id": "cordova-plugin-inappbrowser.inappbrowser",
+            "pluginId": "cordova-plugin-inappbrowser",
+            "clobbers": [
+                "cordova.InAppBrowser.open",
+                "window.open"
+            ]
         }
     ],
     "plugin_metadata": {
         "cordova-plugin-social-message": "0.4.0",
         "cordova-plugin-whitelist": "1.2.2",
-        "phonegap-plugin-barcodescanner": "4.1.0"
+        "phonegap-plugin-barcodescanner": "4.1.0",
+        "cordova-plugin-inappbrowser": "1.4.0"
     }
 }
