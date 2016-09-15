@@ -15,6 +15,15 @@
         },
         "cordova-plugin-social-message": {
             "PACKAGE_NAME": "com.ccali14.giderxyz"
+        },
+        "cordova-plugin-inappbrowser": {
+            "PACKAGE_NAME": "com.thelastcodebenders.pausiber"
+        },
+        "onesignal-cordova-plugin": {
+            "PACKAGE_NAME": "com.thelastcodebenders.pausiber"
+        },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.thelastcodebenders.pausiber"
         }
     },
     "dependent_plugins": {}

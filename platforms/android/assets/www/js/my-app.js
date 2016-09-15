@@ -20,22 +20,23 @@ window.localStorage.setItem('page',1);
 $(document).on('click','.tab-link',function(){
     var id = $(this).attr('id');
 
-    if(id === 'soru-detay-page') {
-      var icerik_id = $(this).attr('data-detay-id');
-      $.each(sorular.kayitlar, function(index,val) {
-        if(val.id == icerik_id) {
-          $('.detay-baslik').html(val.baslik);
-          $('.detay-icerik').html(val.icerik);
-        }
-      });
-    }
-
     if(id === 'icerik-detay-page') {
       var icerik_id = $(this).attr('data-detay-id');
-      $.each(yazilar.kayitlar, function(index,val) {
-        if(val.id == icerik_id) {
-          $('.detay-baslik').html(val.baslik);
-          $('.detay-icerik').html(val.icerik);
+      // alert(icerik_id);
+      $.each(yazilar, function(index,val) {
+        if(val.link == icerik_id) {
+          // alert('biz bize benzeriz :)');
+          $('.detay-baslik').html(val.title);
+          $('.detay-icerik').html(val.content);
+          $('img').height('auto');
+          $('img').width('100%');
+          var foto = $('.detay-icerik img');
+
+          $.each(foto, function(index, value) {
+            console.log($(value).attr('src'));
+            $(value).attr( "data-href", $(value).attr('src') );
+
+          })
         }
       });
 
@@ -45,271 +46,148 @@ $(document).on('click','.tab-link',function(){
 
 });
 
-$(document).on('click','.soru-detay-back',function() {
-  $('.soru-back').addClass('active');
+$(document).on('click', 'img', function() {
+  var ref = cordova.InAppBrowser.open($(this).attr('data-href'), '_self');
+})
+
+$(document).on('click', '.sosyal-medya', function() {
+  var ref = cordova.InAppBrowser.open($(this).attr('data-href'), '_system');
 })
 
 $(document).on('click','.icerik-detay-back',function() {
   $('.icerik-back').addClass('active');
+  $('.detay-baslik').html('');
+  $('.detay-icerik').html('');
 })
 
-// Base url.
-var base_url = 'http://gider.xyz/hackingfest/web/app.php/api/';
-
-var token;
-
-if ( !localStorage.getItem('access_token'))
-{
-    // myApp.loginScreen();
-}
-
-token = localStorage.getItem('access_token');
-
-$(document).on('click','.giris_yap',function(){
-
-    var url = base_url + 'login';
-
-    var form = $('#giris_formu');
-    var buton = $(this);
-
-    buton.text('Giriş işlemi yapılıyor bekleyiniz...');
-
-    $.ajax({
-        url: url,
-        data: form.serialize(),
-        type: 'post',
-        dataType: 'json',
-        success: function (yanit) {
-
-            if(yanit.status_code == 200)
-            {
-                initOdaAndKategori();
-
-                localStorage.setItem('access_token',yanit.token_degeri);
-                token = yanit.token_degeri;
-                anasayfaYenile();
-
-                form.slideUp('slow');
-
-                buton.text("Devam Et");
-                buton.removeClass('giris_yap');
-
-                buton.addClass('close-login-screen');
-
-            }else
-            {
-                myApp.addNotification({
-                    title: 'Gider.XYZ',
-                    message: 'Yanlış kullanıcı adı veya şifre girildi !'
-                });
-
-                buton.text("Giriş Yap");
-
-            }
-
-
-        }
-    });
-
-});
-
-$(document).on('click','.cikis_yap',function () {
-    var form = $('#giris_formu');
-
-    form.slideDown("fast");
-
-    var buton = $('.close-login-screen');
-
-    buton.text("Giriş Yap");
-
-    buton.addClass('giris_yap');
-
-    buton.removeClass('close-login-screen');
-
-    window.localStorage.clear();
-    myApp.loginScreen();
-});
-
-
-$(document).on('click', '.kayit_ol',function(){
-
-    var url = base_url + 'register';
-    var form = $('#kayit_formu');
-    var buton = $(this);
-
-    buton.text('Kayıt olunuyor lütfen bekleyiniz..');
-
-    $.ajax({
-        url: url,
-        data: form.serialize(),
-        type: 'post',
-        dataType: 'json',
-        success: function (yanit) {
-
-            if(yanit.status_code == 200)
-            {
-                initOdaAndKategori();
-
-                localStorage.setItem('access_token',yanit.token_degeri);
-                localStorage.setItem('username',yanit.kullanici_adi);
-
-                token = yanit.token_degeri;
-
-                anasayfaYenile();
-
-                buton.text('Devam Et');
-                form.slideUp('slow');
-
-                buton.removeClass('kayit_ol');
-
-                buton.addClass('close-login-screen');
-            }else
-            {
-                myApp.addNotification({
-                    title: 'Gider.XYZ',
-                    message: 'İşler kötü gitti :( Bir daha denemelisiniz .'
-                });
-
-                buton.text("Kayıt Ol");
-            }
-
-
-        }
-    });
-
-});
 
 // localStorage keywords
 var yazilar;
-var sorular;
+var etkinlikler;
+
+
+var lastIndex;
 
 $( document ).ready(function() {
 
+    myApp.showIndicator();
 
-  yazilar = JSON.parse(localStorage.getItem("yazilar"));
-  sorular = JSON.parse(localStorage.getItem("sorular"));
+  $.ajax({
+    url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent('https://canyoupwn.me/feed'),
+    dataType : 'json',
+    success  : function (data) {
+      navigator.splashscreen.hide();
+      myApp.hideIndicator();
 
-  $.each(yazilar.kayitlar, function(index,value) {
-
-    $('#blogIcerik').append(''+
-    '<div class="card demo-card-header-pic" id="blog-icerik-"'+value.id+'>'+
-      '<div style="background-image:url(https://pbs.twimg.com/profile_banners/762376797635960833/1471388019/1500x500)" valign="bottom" class="card-header color-white no-border">'+value.baslik+'</div>'+
-          '<div class="card-content">'+
-              '<div class="card-content-inner">'+
-                  '<p class="color-gray">Posted on '+value.tarih+'</p>'+
-                  '<p>'+value.icerik+'</p>'+
+      // $('.yukleniyor-yazilar').css('display','none');
+      // console.log(data);
+      if (data.responseData.feed && data.responseData.feed.entries) {
+        yazilar = data.responseData.feed.entries;
+        $.each(data.responseData.feed.entries, function (i, e) {
+          $('#blogIcerik').append(''+
+            '<div class="card demo-card-header-pic" id="blog-icerik-"'+e.link+'>'+
+              '<div style="background-image:url(https://pbs.twimg.com/profile_banners/762376797635960833/1471388019/1500x500)" valign="bottom" class="card-header color-white no-border">'+e.title+'</div>'+
+                  '<div class="card-content">'+
+                      '<div class="card-content-inner">'+
+                          '<p class="color-gray">Posted on '+e.publishedDate+'</p>'+
+                          '<p>'+e.contentSnippet+'</p>'+
+                      '</div>'+
+                  '</div> '+
+               '<div class="card-footer"> '+
+                  '<a href="#" class="link paylas" data-link="'+e.link+'" data-baslik="'+e.title+'">Paylaş</a>'+
+                  '<a href="#icerik-detay" id="icerik-detay-page" data-detay-id="'+e.link+'" class="tab-link active item-link item-content detay-id">Devamını oku</a>'+
               '</div>'+
-          '</div> '+
-       '<div class="card-footer"> '+
-          '<a href="#" class="link">Like</a>'+
-          '<a href="#icerik-detay" id="icerik-detay-page" data-detay-id="'+value.id+'" class="tab-link active item-link item-content detay-id">Read more</a>'+
-      '</div>'+
-    '</div>');
+            '</div>');
+        });
+        // lastIndex = $(data.responseData.feed.entries).length;
+        // alert(lastIndex);
+
+
+      }else {
+        alert('Error :(');
+      }
+    },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(xhr);
+        console.log(thrownError);
+      }
   });
 
-  $.each(sorular.kayitlar, function(index, value) {
-    $('#sorular').append(''+
-    '<div class="list-block media-list " style="margin-top:5px;margin-bottom:5px;" id="soru-id"'+value.id+'>'+
-      '<ul>'+
-        '<li>'+
-          '<a href="#soru-detay" id="soru-detay-page" data-detay-id='+value.id+' class="tab-link active item-link item-content detay-id"> '+
-            '<div class="item-media"><img src="https://pbs.twimg.com/profile_images/765679093228695552/4QWEC5lQ_bigger.jpg" width="44"></div>'+
-            '<div class="item-inner">'+
-              '<div class="item-title-row">'+
-                '<div class="item-title">'+value.baslik+'</div>'+
-              '</div>'+
-              '<div class="item-subtitle">Barisesen</div>'+
-            '</div>'+
-          '</a>'+
-        '</li>'+
-      '</ul>'+
-    '</div>');
+  //  ### Markdown parse örnegi ###
+  // $.ajax({
+  //   url      : 'https://raw.githubusercontent.com/barisesen/test/master/README.md',
+  //   success  : function (data) {
+  //     // console.log(data);
+  //     var mark = data.replace(/\r/g, "").replace(/\n/g, "");
+  //
+  //     //  var mark = data;
+  //      console.log(mark);
+  //      markdownToHtml(mark, function(v) {
+  //        console.log(v);
+  //      })
+  //   }
+  // })
+  //  ### Markdown parse örnegi ###
 
+
+  $.ajax({
+    url      : 'https://raw.githubusercontent.com/barisesen/test-ghp/master/etkinlik.json?token=AOqnrifUAtpRVy2wWfR3H-2E4pSUAslDks5X494ewA%3D%3D',
+    dataType : 'json',
+    success  : function (data) {
+      // alert(data.etkinlikler[0].baslik)
+      // data = JSON.parse(data);
+      // console.log(data);
+      if(data.etkinlikler) {
+        $.each(data.etkinlikler, function(index, value) {
+          $('.etkinlik-liste').append('<li>'+
+          '<a href="#" class="item-link item-content">'+
+          '<div class="item-inner">'+
+          '<div class="item-title-row">'+
+          '<div class="item-title">'+value.baslik+'</div>'+
+          '<div class="item-after">'+value.yapilacakTarih+'</div>'+
+          '</div>'+
+          '<div class="item-subtitle">'+value.yapilacakYer+'</div>'+
+          '<div class="item-text">'+value.kisaIcerik+'</div>'+
+          '</div>'+
+          '</a>'+
+          '</li>');
+        });
+
+      } else {
+        alert('Bir hata oluştu :(')
+      }
+    }
   })
 
-
+/**** Markadown to html kullanımı *******/
+  // markdownToHtml('', function(html) {
+  //   console.log(html);
+  //   alert(html)
+  // });
 
 });
 
-$(document).on('click', '#logla', function() {
-  var yaziObj =
-  {
-  "kayitlar":[
-      {
-        id: 1,
-        baslik: 'lorem',
-        icerik: 'test icerik Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        tarih: '01.01.2016'
-      },
-      {
-        id: 2,
-        baslik: 'test2',
-        icerik: '2test icerik Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        tarih: '02.01.2016'
-      },
-      {
-        id: 3,
-        baslik: 'test3',
-        icerik: 'test icerik3 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-        tarih: '03.01.2016'
-      },
-      {
-        id: 4,
-        baslik: 'Paü Siber Hakkında !',
-        icerik: 'Siber güvenlik farkındalığı oluşturma ve ülkenin ihtiyacı olan nitelikli iş gücünü üretme güdüsüyle birleşmiş insan topluluğuyuz.<b>Barış Esen</b>',
-        tarih: '03.03.2016'
-      }
-    ]
-  };
-
-  var soruObj = {
-    "kayitlar":[
-      {
-        id:1,
-        baslik:"Test soru 1",
-        icerik:"Test soru icerik 1<br> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        tarih :"01.01.1996"
-      },
-      {
-        id:2,
-        baslik:"Test soru 2",
-        icerik:"Test soru icerik 2 <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-        tarih :"01.01.1996"
-      },
-      {
-        id:3,
-        baslik:"Test soru 3",
-        icerik:"Test soru icerik 3 <br> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem",
-        tarih :"01.01.1996"
-      },
-    ]
-  }
-  window.localStorage.setItem('yazilar', JSON.stringify(yaziObj));
-  window.localStorage.setItem('sorular', JSON.stringify(soruObj));
-
-  alert('ok')
-})
-
-$(document).on('click','.sosyal', function () {
+$(document).on('click','.paylas', function () {
     var message = {
-        text: "Sende bütçeni tüm platformlardan takip etmek ister misin ? ",
-        url: "http://gider.xyz"
+        text: $(this).attr('data-baslik')+" - Pausiber aracılığı ile paylaşıldı. ",
+        url: $(this).attr('data-link')
     };
     window.socialmessage.send(message);
 });
+
 // Loading flag
-var loading = false;
-
-// Last loaded index
-var lastIndex = $$('.list-block li').length;
-
-// Max items to load
-var maxItems = 1000;
-
-// Append items per load
-var itemsPerLoad = 20;
-
-// Attach 'infinite' event handler
+// var loading = false;
+//
+// // Last loaded index
+// // var lastIndex = $$('.anasayfa-scroll').length;
+//
+// // Max items to load
+// var maxItems = 60;
+//
+// // Append items per load
+// var itemsPerLoad = 10;
+//
+// // Attach 'infinite' event handler
 // $$('.infinite-scroll').on('infinite', function () {
 //
 //     // Exit, if loading in progress
@@ -331,22 +209,57 @@ var itemsPerLoad = 20;
 //             return;
 //         }
 //
+//         $.ajax({
+//           url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent('https://canyoupwn.me/page/2/feed'),
+//           dataType : 'json',
+//           success  : function (data) {
+//             console.log(data);
+//             if (data.responseData.feed && data.responseData.feed.entries) {
+//               // yazilar = data.responseData.feed.entries;
+//               $.each(data.responseData.feed.entries, function (i, e) {
+//                 $('#blogIcerik').append(''+
+//                   '<div class="card demo-card-header-pic anasayfa-scroll" id="blog-icerik-"'+e.link+'>'+
+//                     '<div style="background-image:url(https://pbs.twimg.com/profile_banners/762376797635960833/1471388019/1500x500)" valign="bottom" class="card-header color-white no-border">'+e.title+'</div>'+
+//                         '<div class="card-content">'+
+//                             '<div class="card-content-inner">'+
+//                                 '<p class="color-gray">Posted on '+e.publishedDate+'</p>'+
+//                                 '<p>'+e.contentSnippet+'</p>'+
+//                             '</div>'+
+//                         '</div> '+
+//                      '<div class="card-footer"> '+
+//                         '<a href="#" class="link">Like</a>'+
+//                         '<a href="#icerik-detay" id="icerik-detay-page" data-detay-id="'+e.link+'" class="tab-link active item-link item-content detay-id">Read more</a>'+
+//                     '</div>'+
+//                   '</div>');
+//               });
+//               // Update last loaded index
+//               lastIndex += $(data.responseData.feed.entries).length;
+//             }else {
+//               alert('Error :(');
+//             }
+//           },
+//             error: function (xhr, ajaxOptions, thrownError) {
+//               alert(xhr);
+//               alert(thrownError);
+//             }
+//         });
+//
 //         // Generate new items HTML
-//         var html = '';
-//         for (var i = lastIndex + 1; i <= lastIndex + itemsPerLoad; i++) {
-//             html += '' +
-//                 '<li class="accordion-item"> <a href="#" class="item-content item-link"> <div class="item-media"> <span class="fa fa-smile-o fa-2x color-green"></span> </div> <div class="item-inner" > <div class="item-title-row"> <div class="item-title ">Gelir</div> <div class="item-after" > 15₺ </div> </div> <div class="item-subtitle"><span class="fa fa-credit-card" style="margin-right: 30px;"></span></div> </div> </a> <div class="accordion-item-content"> <div class="content-block"> <p>Babam sağolsun.. </p> </div> </div> </li>' +
-//                 '';
-//         }
+//         // var html = '';
+//         // for (var i = lastIndex + 1; i <= lastIndex + itemsPerLoad; i++) {
+//         //     html += '' +
+//         //         '<li class="accordion-item"> <a href="#" class="item-content item-link"> <div class="item-media"> <span class="fa fa-smile-o fa-2x color-green"></span> </div> <div class="item-inner" > <div class="item-title-row"> <div class="item-title ">Gelir</div> <div class="item-after" > 15₺ </div> </div> <div class="item-subtitle"><span class="fa fa-credit-card" style="margin-right: 30px;"></span></div> </div> </a> <div class="accordion-item-content"> <div class="content-block"> <p>Babam sağolsun.. </p> </div> </div> </li>' +
+//         //         '';
+//         // }
 //
 //         // Append new items
-//         $$('.anasayfa').append(html);
+//         // $$('.anasayfa').append(html);
 //
-//         // Update last loaded index
-//         lastIndex = $$('.list-block li').length;
+//
 //     }, 1000);
 // });
 // Pull to refresh content
+
 var ptrContent = $('.pull-to-refresh-content');
 
 // Add 'refresh' listener on it
@@ -358,61 +271,87 @@ ptrContent.on('refresh', function (e) {
         var yazi = '';
         if (window.localStorage.getItem('page') == 1)
         {
-            yazi = "Anasayfa güncellendi";
-            anasayfaYenile();
+          $.ajax({
+            url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent('https://canyoupwn.me/feed'),
+            dataType : 'json',
+            success  : function (data) {
 
-        }
-        if (window.localStorage.getItem('page') == 2)
-        {
-            yazi = "Odalar ve kategoriler güncellendi." ;
-            $.ajax({
-                url: base_url + 'oda/listele-baslik',
-                data: 'access_token=' + token,
-                type: 'post',
-                dataType: 'json',
-                success: function (yanit) {
+              // $('.yukleniyor-yazilar').css('display','none');
+              // console.log(data);
+              if (data.responseData.feed && data.responseData.feed.entries) {
+                $('#blogIcerik').html('');
+                yazilar = data.responseData.feed.entries;
+                $.each(data.responseData.feed.entries, function (i, e) {
+                  $('#blogIcerik').append(''+
+                    '<div class="card demo-card-header-pic" id="blog-icerik-"'+e.link+'>'+
+                      '<div style="background-image:url(https://pbs.twimg.com/profile_banners/762376797635960833/1471388019/1500x500)" valign="bottom" class="card-header color-white no-border">'+e.title+'</div>'+
+                          '<div class="card-content">'+
+                              '<div class="card-content-inner">'+
+                                  '<p class="color-gray">Posted on '+e.publishedDate+'</p>'+
+                                  '<p>'+e.contentSnippet+'</p>'+
+                              '</div>'+
+                          '</div> '+
+                       '<div class="card-footer"> '+
+                          '<a href="#" class="link paylas" data-link="'+e.link+'" data-baslik="'+e.title+'">Paylaş</a>'+
+                          '<a href="#icerik-detay" id="icerik-detay-page" data-detay-id="'+e.link+'" class="tab-link active item-link item-content detay-id">Devamını oku</a>'+
+                      '</div>'+
+                    '</div>');
+                });
+                // lastIndex = $(data.responseData.feed.entries).length;
+                // alert(lastIndex);
 
 
-                    if (yanit.status_code == 200) {
-                        $.each(yanit.odalar, function (index, value) {
+              }else {
+                alert('Error :(');
+              }
+            },
+              error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr);
+                console.log(thrownError);
+              }
+          });
 
-                            $('.odalar_select').append('<option value="' + value.key + '">' + value.baslik + '</option>');
-                            //alert(value.key);
-
-                        });
-
-
-                    }
-                    else {
-
-                    }
-                }
-            });
+            yazi = "Blog yazıları güncellendi";
 
         }
         if (window.localStorage.getItem('page') == 3)
         {
-            alacakYenile();
-            yazi =  "Alacak & Verecek güncellendi." ;
-        }
-        if (window.localStorage.getItem('page') == 4)
-        {
-            odaYenile();
-            yazi =  "Odalar güncellendi." ;
-        }
-        if (window.localStorage.getItem('page') == 5)
-        {
-            alacakYenile();
-            yazi =  "Alacaklar güncellendi" ;
-        }
-        if (window.localStorage.getItem('page') == 6)
-        {
-            verecekYenile();
-            yazi =  "Verecekler güncellendi" ;
+          $.ajax({
+            url      : 'https://raw.githubusercontent.com/barisesen/test-ghp/master/etkinlik.json?token=AOqnrifUAtpRVy2wWfR3H-2E4pSUAslDks5X494ewA%3D%3D',
+            dataType : 'json',
+            success  : function (data) {
+              // alert(data.etkinlikler[0].baslik)
+              // data = JSON.parse(data);
+              // console.log(data);
+              if(data.etkinlikler) {
+                $('.etkinlik-liste').html('');
+                $.each(data.etkinlikler, function(index, value) {
+                  $('.etkinlik-liste').append('<li>'+
+                  '<a href="#" class="item-link item-content">'+
+                  '<div class="item-inner">'+
+                  '<div class="item-title-row">'+
+                  '<div class="item-title">'+value.baslik+'</div>'+
+                  '<div class="item-after">'+value.yapilacakTarih+'</div>'+
+                  '</div>'+
+                  '<div class="item-subtitle">'+value.yapilacakYer+'</div>'+
+                  '<div class="item-text">'+value.kisaIcerik+'</div>'+
+                  '</div>'+
+                  '</a>'+
+                  '</li>');
+                });
+
+              } else {
+                alert('Bir hata oluştu :(')
+              }
+            }
+          })
+
+
+            yazi =  "Etkinlik listesi güncellendi" ;
         }
 
         myApp.addNotification({
-            title: 'Gider.XYZ',
+            title: 'Pausiber.xyz',
             message: yazi,
             onClose: function () {
                 console.log('Notification closed');
