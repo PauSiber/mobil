@@ -337,7 +337,7 @@ ptrContent.on('refresh', function (e) {
         if (window.localStorage.getItem('page') == 3)
         {
           $.ajax({
-            url      : 'https://raw.githubusercontent.com/barisesen/test-ghp/master/etkinlik.json?token=AOqnrifUAtpRVy2wWfR3H-2E4pSUAslDks5X494ewA%3D%3D',
+            url      : 'https://barisesen.github.io/test-ghp/etkinlik.json',
             dataType : 'json',
             success  : function (data) {
               // alert(data.etkinlikler[0].baslik)
